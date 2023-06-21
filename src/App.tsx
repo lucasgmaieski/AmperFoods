@@ -1,25 +1,31 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import * as C from './App.styled';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useAppSelector } from './redux/hooks/useAppSelector';
 
 import HomeScreen from './pages/HomeScreen';
 import Tela2Screen from './pages/Tela2Screen';
+import { MenuItem } from './components/MenuItem';
 
 export default () => {
-    const name = useSelector(state => state.user.name);
+    const name = useAppSelector(state => state.user.name);
 
     return (
         <BrowserRouter>
-            <h1>Oi, {name}</h1>
+            <C.Container>
+                <C.Menu>
+                    <MenuItem icon="/assets/store.png" link="/"/>
+                    <MenuItem icon="/assets/order.png" link="/orders"/>
+                    <MenuItem icon="/assets/profile.png" link="/profile"/>
+                </C.Menu>
+                <C.PageBody>
+                    <Routes>
+                        <Route  path="/" element={<HomeScreen />} />
+                            
+                        <Route path="/tela2/:nome" element={<Tela2Screen />} />
+                    </Routes>
+                </C.PageBody>
+            </C.Container>
 
-            <Switch>
-                <Route exact path="/">
-                    <HomeScreen />
-                </Route>
-                <Route path="/tela2/:nome">
-                    <Tela2Screen />
-                </Route>
-            </Switch>
         </BrowserRouter>
     );
 }

@@ -1,12 +1,12 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as C from './styled';
 
 export default () => {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleButtonClick = () => {
-        history.push('/tela2/testador');
+        navigate('/tela2/testador');
     }
 
     return (

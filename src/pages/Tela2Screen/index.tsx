@@ -1,7 +1,9 @@
-import React from 'react';
+import { ChangeEvent } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import * as C from './styled';
+import { setName } from '../../redux/reducers/UserReducer';
 
 export default () => {
     const navigate = useNavigate();
@@ -9,15 +11,10 @@ export default () => {
 
     let { nome } = useParams();
 
-    const name = useSelector(state => state.user.name);
+    const name = useAppSelector(state => state.user.name);
 
-    const handleTextChange = (e) => {
-        dispatch({
-            type: 'SET_NAME',
-            payload:{
-                name: e.target.value
-            }
-        });
+    const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch( setName(e.target.value));
     }
 
     return (
