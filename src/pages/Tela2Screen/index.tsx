@@ -11,15 +11,16 @@ export default () => {
 
     let { nome } = useParams();
 
-    const name = useAppSelector(state => state.user.name);
+    const name = useAppSelector(state => state.persistedReducer.user.name);
 
     const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch( setName(e.target.value));
+        dispatch( setName({name: e.target.value}));
+        console.log(name);
     }
 
     return (
         <C.Container>
-            <C.Titulo>Tela2 de {nome}</C.Titulo>
+            <C.Titulo>Tela2 de {name}</C.Titulo>
 
             <input type="text" value={name} onChange={handleTextChange} />
 

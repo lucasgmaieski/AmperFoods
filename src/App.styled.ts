@@ -8,6 +8,8 @@ export const Container = styled.div`
 
 export const Menu = styled.div`
     display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #E35319;
     width: 80px;
     flex-direction: column;
@@ -15,6 +17,7 @@ export const Menu = styled.div`
 
 export const PageBody = styled.div`
     display: flex;
-    background-color: #0000ff;
+    background-color: #FE8824;
+    background-image: url('/assets/bg-af.png');
     flex: 1;
 `;
