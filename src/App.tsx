@@ -1,6 +1,7 @@
 import * as C from './App.styled';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useAppSelector } from './redux/hooks/useAppSelector';
+import {Tooltip} from 'react-tooltip';
 import { useEffect } from 'react';
 import HomeScreen from './pages/HomeScreen';
 import Tela2Screen from './pages/Tela2Screen';
@@ -18,9 +19,9 @@ export default () => {
         <BrowserRouter>
             <C.Container>
                 <C.Menu>
-                    <MenuItem icon="/assets/store.png" link="/"/>
-                    <MenuItem icon="/assets/order.png" link="/orders"/>
-                    <MenuItem icon="/assets/profile.png" link="/profile"/>
+                    <MenuItem title="Loja" icon="/assets/store.png" link="/"/>
+                    <MenuItem title="Pedidos" icon="/assets/order.png" link="/orders"/>
+                    <MenuItem title="Perfil" icon="/assets/profile.png" link="/profile"/>
                 </C.Menu>
                 <C.PageBody>
                     <Routes>
@@ -32,6 +33,8 @@ export default () => {
                     </Routes>
                 </C.PageBody>
                 <Cart />
+                <Tooltip id="tip-top" place="top" float={false}/>
+                <Tooltip id="tip-right" place="right" float={false}/>
             </C.Container>
 
         </BrowserRouter>
