@@ -3,11 +3,16 @@ import * as C from './styles';
 
 type Props ={
     data: ProdItem;
+    onClick: (data: ProdItem) => void;
 }
 
-export const ProductItem = ({data}: Props) => {
+export const ProductItem = ({data, onClick}: Props) => {
+    const handleClick = () => {
+        onClick(data);
+    }
+
     return (
-        <C.Container>
+        <C.Container onClick={handleClick}>
             <C.ProductPhotoArea>
                 <C.ProductPhoto src={data.image} />
             </C.ProductPhotoArea> 
