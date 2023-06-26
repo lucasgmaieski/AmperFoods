@@ -16,7 +16,7 @@ export const slice = createSlice({
     }
 });
 
-export const {setName} = slice.actions;
+export const {setName, setToken} = slice.actions;
 export default slice.reducer;
 
 // const initialState = {
