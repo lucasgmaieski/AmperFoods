@@ -1,17 +1,18 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import * as C from './styled';
 import { setName } from '../../redux/reducers/UserReducer';
 import { persistor } from '../../redux/store';
+import { Header } from '../../components/Header';
+import { OrderItem } from '../../components/OrderItem';
 
 
-export default () => {
+export const OrdersScreen = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    let { nome } = useParams();
+    const [headerSearch, setHeaderSerach] = useState('');
 
     const name = useAppSelector(state => state.persistedReducer.user.name);
 
@@ -22,12 +23,15 @@ export default () => {
 
     return (
         <C.Container>
-            <C.Titulo>Tela2 de {name}</C.Titulo>
+            <Header search={headerSearch} onSearch={setHeaderSerach}/>
+            <C.LastOrderArea>
 
-            <input type="text" value={name} onChange={handleTextChange} />
+            </C.LastOrderArea>
+            
+            <C.OrdersArea>
+                <OrderItem />
+            </C.OrdersArea>
 
-            <button onClick={()=>navigate(-1)}>Voltar</button>
-            <button onClick={()=> (persistor.purge())}>Limpar persistor</button>
         </C.Container>
     );
 }

@@ -10,17 +10,7 @@ type InitialStateProducts = {
 export const slice = createSlice({
     name: 'cart',
     initialState: {
-        products: [{
-            id: 1,
-            id_cat: 1,
-            image: 'adfadf',
-            ingredients: 'kjgk',
-            name: 'suco',
-            points: 5,
-            price: 10,
-            qt: 1,
-            },
-        ],
+        products: [],
         address: [],
         discount: 0,
         delivery: 0
@@ -29,7 +19,6 @@ export const slice = createSlice({
         addProduct: (state: InitialStateProducts, action) => {
             let products = [...state.products]
             let id = action.payload.data.id;
-            console.log(state.products)
 
             let index = state.products.findIndex(item => item.id === id);
             console.log(state.products)
@@ -44,11 +33,27 @@ export const slice = createSlice({
 
             console.log(state.products)
             console.log(products)
-            console.log(products[14].name)
-            console.log(products[14].qt)
+            products.forEach((element, index) => {
+                console.log('name- '+index+':'+element.name)
+                console.log('qt: '+element.qt)
+            });
+            // console.log(products[14].name)
+            // console.log(products[14].qt)
         },
+        changeProduct: (state: InitialStateProducts, action) => {
+            if(state.products[action.payload.key]) {
+                if(action.payload.type === '-') {
+                    state.products[action.payload.key].qt--; 
+                    if(state.products[action.payload.key].qt <= 0) {
+                        state.products = state.products.filter((item, index)=>index != action.payload.key)
+                    }
+                } else {
+                    state.products[action.payload.key].qt++;
+                }
+            }
+        }
     }
 });
 
-export const {addProduct} = slice.actions;
+export const {addProduct, changeProduct} = slice.actions;
 export default slice.reducer;

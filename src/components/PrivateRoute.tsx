@@ -9,7 +9,7 @@ type Props = {
 export const PrivateRoute = ({children}: Props) => {
     const token = useAppSelector(state => state.persistedReducer.user.token);
 
-    if(!token || token == '') {
+    if(token || token !== '') {
         
         return <Navigate to="/login" />;
     }

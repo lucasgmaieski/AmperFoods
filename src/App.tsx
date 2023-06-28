@@ -8,6 +8,8 @@ import Tela2Screen from './pages/Tela2Screen';
 import { MenuItem } from './components/MenuItem';
 import { PrivateRoute } from './components/PrivateRoute';
 import { Cart } from './components/Cart';
+import { OrdersScreen } from './pages/OrdersScreen';
+import { ProfileScreen } from './pages/ProfileScreen';
 
 export default () => {
     const name = useAppSelector(state => state.persistedReducer.user.name);
@@ -25,9 +27,9 @@ export default () => {
                 </C.Menu>
                 <C.PageBody>
                     <Routes>
-                        <Route  path="/" element={<HomeScreen />} />
-                        <Route path="/orders" element={<PrivateRoute><div>tela de pedidos</div></PrivateRoute>} />
-                        <Route path="/profile" element={<PrivateRoute><div>tela de perfil</div></PrivateRoute>} />
+                        <Route path="/" element={<HomeScreen />} />
+                        <Route path="/orders" element={<PrivateRoute><OrdersScreen /></PrivateRoute>} />
+                        <Route path="/profile" element={<PrivateRoute><ProfileScreen /></PrivateRoute>} />
                         <Route path="/tela2/:nome" element={<Tela2Screen />} />
                         <Route path="/login" element={<div>Login</div>} />
                     </Routes>
