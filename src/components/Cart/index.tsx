@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import * as C from './styles';
 import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import { useDispatch } from 'react-redux';
@@ -9,8 +9,21 @@ export const Cart = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const products = useAppSelector(state => state.persistedReducer.cart.products);
+    const userInfos = useAppSelector(state => state.persistedReducer.user);
+    const [coupon, setCoupon] = useState('AMPERFOODS10');
+    const [amount, setAmount] = useState(0);
+    const delivery = 5;
+    const discount = .10;
+    const [show, setShow] = useState(true); //-------
 
-    const [show, setShow] = useState(false);
+    useEffect(()=>{
+        setAmount(products.reduce((accumulator, product) => {
+            return accumulator + (product.qt * product.price);
+        }, 0));
+        
+        console.log(amount);
+    }, [products]);
+
     const handleCartClick = () => {
         setShow(!show);
     };
@@ -21,7 +34,12 @@ export const Cart = () => {
         }));
     };
 
+    const handleCouponInput = (e: ChangeEvent<HTMLInputElement>) => {
+        setCoupon(e.target.value);
+    }
+
     const handleCheckout = () => {
+        // preencher as ordens e limpar o carrinho
 
         
         navigate('/orders');
@@ -61,30 +79,29 @@ export const Cart = () => {
                 <C.AddressArea>
                     <C.AddressTitle>Entrega</C.AddressTitle>
                     <C.AddressInfosArea>
-                        <div>
-                            minha casa <br />
-                            Rua Iguaçu, 200 <br />
-                            Ampére, PR
-                        </div>
+                        <C.AddressText>
+                            {userInfos.address}
+                        </C.AddressText>
                         <C.AddressEditIcon src="/assets/edit.png" />
                     </C.AddressInfosArea>
                 </C.AddressArea>
                 <C.CouponArea>
                     <C.CouponTitle>Cupom de desconto</C.CouponTitle>
-                    <C.CouponInput type="text" value="AMPERFOODS10"/>
+                    <C.CouponInput type="text" value={coupon} onChange={handleCouponInput}/>
                 </C.CouponArea>
                 <C.ValuesArea>
                     <C.ValuesItem>
                         <span>Desconto</span>
-                        <span>R$ 15,99</span>
+                        <span>R$ {discount*100}</span>
                     </C.ValuesItem>
                     <C.ValuesItem>
                         <span>Taxa de entrega</span>
-                        <span>R$ 4,99</span>
+                        <span>R$ {delivery.toFixed(2)}</span>
                     </C.ValuesItem>
                     <C.ValuesItem>
                         <span>Total</span>
-                        <span>R$ 20,99</span>
+                        {/* <span>R$ {amount + delivery}</span> */}
+                        <span>R$ {amount }</span>
                     </C.ValuesItem>
                 </C.ValuesArea>
                 <C.ButtonCheckout onClick={handleCheckout}>Finalizar Compra</C.ButtonCheckout>

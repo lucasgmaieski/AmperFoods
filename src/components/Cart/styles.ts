@@ -84,6 +84,9 @@ export const AddressInfosArea = styled.div`
     justify-content: space-between;
     font-size: 13px;
 `;
+export const AddressText = styled.p`
+    max-width: 80%;
+`;
 export const AddressEditIcon = styled.img` 
     width: 15px;
     height: auto;
