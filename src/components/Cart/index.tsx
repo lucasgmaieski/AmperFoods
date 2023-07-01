@@ -4,6 +4,8 @@ import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import { useDispatch } from 'react-redux';
 import { changeProduct } from '../../redux/reducers/CartReducer';
 import { useNavigate } from 'react-router-dom';
+import { formattedCurrentDate } from '../../helpers/dataHelper';
+import { saveOrder } from '../../redux/reducers/OrdersReducer';
 
 export const Cart = () => {
     const navigate = useNavigate();
@@ -13,7 +15,7 @@ export const Cart = () => {
     const [coupon, setCoupon] = useState('AMPERFOODS10');
     const [amount, setAmount] = useState(0);
     const delivery = 5;
-    const discount = .10;
+    const discount = 10;
     const [show, setShow] = useState(true); //-------
 
     useEffect(()=>{
@@ -22,6 +24,9 @@ export const Cart = () => {
         }, 0));
         
         console.log(amount);
+        const dataAtual = new Date();
+        console.log(dataAtual);
+        console.log(formattedCurrentDate());
     }, [products]);
 
     const handleCartClick = () => {
@@ -40,7 +45,17 @@ export const Cart = () => {
 
     const handleCheckout = () => {
         // preencher as ordens e limpar o carrinho
-
+        const totalPayable = amount + delivery - (discount*amount*0.01)
+        dispatch( saveOrder({
+            date: formattedCurrentDate(),
+            status: 1,
+            address: userInfos.address,
+            discount: discount,
+            delivery: delivery,
+            amount: amount,
+            totalPayable: totalPayable,
+            products: products
+        }))
         
         navigate('/orders');
     }
@@ -56,7 +71,7 @@ export const Cart = () => {
             <C.CartBody show={show.toString()}>
                 <C.ProductsArea>
                     {products.map((item, index)=> (
-                        <C.ProductItem key={index}>
+                    <C.ProductItem key={index}>
                         <C.ProductPhoto src={item.image} />
                         <C.ProductInfoArea>
                             <C.ProductName>{item.name}</C.ProductName>
@@ -91,17 +106,20 @@ export const Cart = () => {
                 </C.CouponArea>
                 <C.ValuesArea>
                     <C.ValuesItem>
-                        <span>Desconto</span>
-                        <span>R$ {discount*100}</span>
+                        <span>Produtos</span>
+                        <span>R$ {amount.toFixed(2)}</span>
                     </C.ValuesItem>
                     <C.ValuesItem>
                         <span>Taxa de entrega</span>
                         <span>R$ {delivery.toFixed(2)}</span>
                     </C.ValuesItem>
                     <C.ValuesItem>
+                        <span>Desconto</span>
+                        <span>R$ {(discount*(amount+delivery)*0.01).toFixed(2)} ({discount}%)</span>
+                    </C.ValuesItem>
+                    <C.ValuesItem>
                         <span>Total</span>
-                        {/* <span>R$ {amount + delivery}</span> */}
-                        <span>R$ {amount }</span>
+                        <span>R$ {(amount + delivery - (discount*amount*0.01)).toFixed(2)}</span>
                     </C.ValuesItem>
                 </C.ValuesArea>
                 <C.ButtonCheckout onClick={handleCheckout}>Finalizar Compra</C.ButtonCheckout>
