@@ -44,7 +44,7 @@ export const ProductItem = styled.div`
 export const ProductPhoto = styled.img`
     width: 64px;
     height: auto;
-    border-radius: 10px;
+    border-radius: 5px;
 `;
 export const ProductInfoArea = styled.div`
     flex: 1;
@@ -127,4 +127,10 @@ export const ButtonCheckout = styled.button`
     padding: 7px;
     color: #fff;
     border-radius:12px;
+    cursor: pointer;
+    &:disabled {
+        /* background-color: #FA8229; */
+        filter: grayscale(.4);
+        cursor: not-allowed;
+    }
 `;

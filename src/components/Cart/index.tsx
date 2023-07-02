@@ -2,10 +2,12 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import * as C from './styles';
 import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import { useDispatch } from 'react-redux';
-import { changeProduct } from '../../redux/reducers/CartReducer';
+import { changeProduct, clearCart } from '../../redux/reducers/CartReducer';
 import { useNavigate } from 'react-router-dom';
 import { formattedCurrentDate } from '../../helpers/dataHelper';
 import { saveOrder } from '../../redux/reducers/OrdersReducer';
+import { Modal } from '../Modal';
+import { ModalCheckout } from '../ModalCheckout';
 
 export const Cart = () => {
     const navigate = useNavigate();
@@ -16,7 +18,13 @@ export const Cart = () => {
     const [amount, setAmount] = useState(0);
     const delivery = 5;
     const discount = 10;
+    const totalPayable = amount + delivery - (discount*amount*0.01);
+
     const [show, setShow] = useState(true); //-------
+
+    const [modalStatus, setModalStatus] = useState(false);
+    const [confirmOrderStatus, setConfirmOrderStatus] = useState(false);
+
 
     useEffect(()=>{
         setAmount(products.reduce((accumulator, product) => {
@@ -28,6 +36,27 @@ export const Cart = () => {
         console.log(dataAtual);
         console.log(formattedCurrentDate());
     }, [products]);
+
+    useEffect(()=>{
+        //preencher as ordens e limpar o carrinho
+        if(confirmOrderStatus) {
+            dispatch( saveOrder({
+                date: formattedCurrentDate(),
+                status: 1,
+                address: userInfos.address,
+                discount: discount,
+                delivery: delivery,
+                amount: amount,
+                totalPayable: totalPayable,
+                products: products
+            }));
+            dispatch( clearCart({}))
+            navigate('/orders');
+            setModalStatus(false);
+        }
+
+        setConfirmOrderStatus(false);
+    }, [confirmOrderStatus]);
 
     const handleCartClick = () => {
         setShow(!show);
@@ -43,21 +72,8 @@ export const Cart = () => {
         setCoupon(e.target.value);
     }
 
-    const handleCheckout = () => {
-        // preencher as ordens e limpar o carrinho
-        const totalPayable = amount + delivery - (discount*amount*0.01)
-        dispatch( saveOrder({
-            date: formattedCurrentDate(),
-            status: 1,
-            address: userInfos.address,
-            discount: discount,
-            delivery: delivery,
-            amount: amount,
-            totalPayable: totalPayable,
-            products: products
-        }))
-        
-        navigate('/orders');
+    const handleCheckoutClick = () => {
+        setModalStatus(true);
     }
     return (
         <C.CartArea>
@@ -115,15 +131,18 @@ export const Cart = () => {
                     </C.ValuesItem>
                     <C.ValuesItem>
                         <span>Desconto</span>
-                        <span>R$ {(discount*(amount+delivery)*0.01).toFixed(2)} ({discount}%)</span>
+                        <span>R$ {amount ? (discount*(amount+delivery)*0.01).toFixed(2) : '0.00'} ({discount}%)</span>
                     </C.ValuesItem>
                     <C.ValuesItem>
                         <span>Total</span>
-                        <span>R$ {(amount + delivery - (discount*amount*0.01)).toFixed(2)}</span>
+                        <span>R$ {amount ? (amount + delivery - (discount*amount*0.01)).toFixed(2) : '0.00'}</span>
                     </C.ValuesItem>
                 </C.ValuesArea>
-                <C.ButtonCheckout onClick={handleCheckout}>Finalizar Compra</C.ButtonCheckout>
+                <C.ButtonCheckout onClick={handleCheckoutClick} disabled={products.length === 0}>Finalizar Compra</C.ButtonCheckout>
             </C.CartBody>
+            <Modal status={modalStatus} setStatus={setModalStatus}>
+                <ModalCheckout totalPayable={totalPayable} setModalStatus={setModalStatus} setConfirmOrderStatus={setConfirmOrderStatus}/>
+            </Modal>
         </C.CartArea>
     )
 }

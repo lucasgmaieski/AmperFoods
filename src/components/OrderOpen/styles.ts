@@ -67,7 +67,7 @@ export const ProductItem = styled.div`
 export const ProductPhoto = styled.img`
     width: 64px;
     height: auto;
-    border-radius: 10px;
+    border-radius: 5px;
 `;
 export const ProductInfoArea = styled.div`
     flex: 1;
