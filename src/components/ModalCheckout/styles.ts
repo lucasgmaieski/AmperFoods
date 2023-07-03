@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled,{  keyframes } from "styled-components";
 
 export const Container = styled.div`
     max-width: 650px;
@@ -29,13 +29,20 @@ export const ProductButton = styled.button<{small?: string}>`
 
 export const AddressArea = styled.div`
     display: flex;
-    margin: 10px 0;
+    margin: 15px 0;
 `;
-export const AddressInput = styled.input<{edit: boolean}>`
+
+export const AddressInput = styled.input<{edit: string}>`
     flex: 1;
     font-size: 16px;
-    border: ${props=>props.edit ? '1px solid #e35319' : 'none'};
+    border: ${props=>props.edit === 'true' ? '1px solid #e35319' : '1px solid transparent'};
+    transition: border-color .5s ;
+ 
+    &:focus-visible {
+        outline: 0;
+    }
 `;
+
 export const AddressButton = styled.div`
     cursor: pointer;
     margin-left: 5px;
@@ -43,6 +50,11 @@ export const AddressButton = styled.div`
         width: 1.5rem;
         height: 1.5rem; 
     }
+`;
+export const AddressSaveButton = styled(AddressButton)<{edit?: string, disable: string}>`
+    transition: opacity ease 0.5s;
+    opacity: ${props=>props.edit === 'true' ? '1': '0'};
+    pointer-events: ${props=>props.disable === 'false' ? 'auto': 'none'};
 `;
 
 export const TotalPayable = styled.div` 

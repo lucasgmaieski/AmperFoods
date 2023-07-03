@@ -1,18 +1,33 @@
+import { useRef } from 'react';
 import { OrderItemType } from '../../types/OrderItem';
-import { ProdItem } from '../../types/ProdItem';
 import * as C from './styles';
 
 type Props ={
     data: OrderItemType;
     onClick: (data: number) => void;
     index: number;
+    componenteBRef: any;
 }
 
-export const OrderItem = ({data, onClick, index}: Props) => {
-    
+export const OrderItem = ({data, onClick, index, componenteBRef}: Props) => {
+
+    // const componenteBRef = useRef<any>();
+
+    const handleScrollToComponentB = () => {
+      componenteBRef.current.scrollIntoView({
+        behavior: 'smooth',
+      });
+    };
+
     const handleOpenOrder = () => {
+        
         onClick(index);
+        console.log("aaaaaaaaa");
+        componenteBRef.current.scrollIntoView({
+            behavior: 'smooth',
+          });
     }
+    
 
     return (
         <C.Container onClick={handleOpenOrder}>
@@ -27,7 +42,7 @@ export const OrderItem = ({data, onClick, index}: Props) => {
                     'Você ainda não registrou um endereço.'
                     }
                 </C.Address>
-                <C.Amount>R$ {data.totalPayable}</C.Amount>
+                <C.Amount>R$ {data.totalPayable.toFixed(2)}</C.Amount>
             </C.LowerArea>
         </C.Container>
     )
