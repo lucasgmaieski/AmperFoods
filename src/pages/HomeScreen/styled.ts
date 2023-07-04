@@ -23,7 +23,14 @@ export const ProductArea = styled.div`
 export const ProductList = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
     gap: 15px;
+    @media (max-width: 991px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 660px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 `;
 
 export const ProductPaginationArea = styled.div`
