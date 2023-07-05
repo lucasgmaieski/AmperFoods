@@ -5,6 +5,10 @@ import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import * as C from './styled';
 import { setInfo, setName } from '../../redux/reducers/UserReducer';
 import { Header } from '../../components/Header';
+import { logout } from '../../services/util';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../services/firebaseConfig';
+import { useIdToken } from 'react-firebase-hooks/auth';
 
 
 export const ProfileScreen = () => {
@@ -57,11 +61,16 @@ export const ProfileScreen = () => {
         setPhoneInput(userInfos.phone);
     }
 
+    const handleLogout = () => {
+       logout();
+        
+    }
     return (
         <C.Container>
             <Header search={headerSearch} onSearch={setHeaderSerach}/>
-
-            <C.Titulo>Perfil do usuário</C.Titulo>
+            <p>current user email{auth.currentUser?.email}</p>
+            <C.Titulo>Perfil do usuário: <strong>{userInfos.name}</strong> </C.Titulo>
+            <C.ButtonSignOut onClick={handleLogout}>Sair</C.ButtonSignOut>
             <C.FormArea onSubmit={handleSaveButton}>
                 <C.Label>
                     Nome:

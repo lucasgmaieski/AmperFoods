@@ -41,3 +41,12 @@ export const ButtonSave = styled.input`
     border-radius:10px;
     cursor: pointer;
 `;
+
+export const ButtonSignOut = styled.button`
+    background-color: #fff;
+    border-radius: 5px;
+    border: none;
+    padding: 7px;
+    cursor: pointer;
+    color: #E3531a;
+`

@@ -3,11 +3,13 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import * as C from './styled';
-import { setName } from '../../redux/reducers/UserReducer';
+import { setInfo, setName, setToken } from '../../redux/reducers/UserReducer';
 import { persistor } from '../../redux/store';
 
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { auth } from '../../services/firebaseConfig';
+import { auth, firestore } from '../../services/firebaseConfig';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+
 
 export const Register = () => {
     const navigate = useNavigate();
@@ -19,18 +21,46 @@ export const Register = () => {
     const [addressInput, setAddressInput] = useState('');
     const [phoneInput, setPhoneInput] = useState('');
     const name = useAppSelector(state => state.persistedReducer.user.name);
+    
+    
+    const handleSignUp = async (e: ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+    
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, emailInput, passwordInput);
+        const user = userCredential.user;
+    
+        console.log("Usuário criado e logado automaticamente com uid: " + user.uid);
+    
+        if (user) {
+            const userDocRef = doc(firestore, 'users', user.uid);
+            const userData = { name:nameInput, email: user.email, phone: phoneInput, address: addressInput };
+        
+            await setDoc(userDocRef, userData);
 
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
-   
-    const handleSignIn = (e: ChangeEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        createUserWithEmailAndPassword(emailInput, passwordInput);
-    }
-    if (loading) {
-        return <p>Loading...</p>;
-    }
+            dispatch(setToken({ token: user.getIdTokenResult()}));
+            dispatch( setInfo({
+                name: nameInput,
+                email: emailInput,
+                phone: phoneInput,
+                address: addressInput
+            }));
+            setNameInput('');
+            setEmailInput('');
+            setAddressInput('');
+            setPhoneInput('');
+            setPasswordInput('');
+            navigate('/profile');
+        }
+
+      } catch (error:any) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // Trate qualquer erro ocorrido durante o processo
+      }
+    };
+    
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         if(e.target.id == 'name') {
@@ -55,7 +85,7 @@ export const Register = () => {
         <C.Container>
             <C.Titulo>Por favor digite suas informações de Cadastro</C.Titulo>
 
-            <C.FormArea onSubmit={handleSignIn}>
+            <C.FormArea onSubmit={handleSignUp}>
                 <C.InputArea>
                     <C.Label htmlFor="name">Nome:</C.Label>
                     <C.Input type="text" name="name" id="name" value={nameInput} onChange={handleInputChange}/>
