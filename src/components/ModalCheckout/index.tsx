@@ -25,16 +25,13 @@ export const ModalCheckout = ({totalPayable, setModalStatus, setConfirmOrderStat
 
     useEffect(()=>{
         setAddressInput(address);
-        console.log("addressInput é:"+addressInput);
         if(address.length === 0) {
             setEditing(true);
         } 
-
     },[]);
 
     useEffect(()=> {
         addressInput.length === 0 ? setDisableButton(true) : setDisableButton(false);
-        
     }, [addressInput]);
 
     const handleCancelButton = () => {

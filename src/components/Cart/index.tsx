@@ -8,6 +8,9 @@ import { formattedCurrentDate } from '../../helpers/dataHelper';
 import { saveOrder } from '../../redux/reducers/OrdersReducer';
 import { Modal } from '../Modal';
 import { ModalCheckout } from '../ModalCheckout';
+import { adicionarPedido } from '../../services/util';
+import { addDoc, collection, doc } from 'firebase/firestore';
+import { auth, db } from '../../services/firebaseConfig';
 
 export const Cart = () => {
     const navigate = useNavigate();
@@ -20,7 +23,7 @@ export const Cart = () => {
     const discount = 10;
     const totalPayable = amount + delivery - (discount*amount*0.01);
 
-    const [show, setShow] = useState(true); //-------
+    const [show, setShow] = useState(false); //-------
 
     const [modalStatus, setModalStatus] = useState(false);
     const [confirmOrderStatus, setConfirmOrderStatus] = useState(false);
@@ -50,9 +53,42 @@ export const Cart = () => {
                 totalPayable: totalPayable,
                 products: products
             }));
+
+            const adicionarPedido = async () => {
+                console.log("adicionando pedido ...")
+
+                const user = auth.currentUser;
+              
+                if (user) {
+                  const uid = user.uid;
+              
+                  try {
+                    const userDocRef = doc(db, 'users', uid);
+                    const pedidosSubcollectionRef = collection(userDocRef, 'orderss');
+                    await addDoc(pedidosSubcollectionRef, {
+                        date: formattedCurrentDate(),
+                        status: 1,
+                        address: userInfos.address,
+                        discount: discount,
+                        delivery: delivery,
+                        amount: amount,
+                        totalPayable: totalPayable,
+                        products: products
+                    });
+                    console.log("pedido adicionado com sucesso ")
+                    // Pedido adicionado com sucesso à subcoleção "pedidos" dentro do documento do usuário
+                  } catch (error) {
+                    // Ocorreu um erro ao adicionar o pedido
+                    console.error(error);
+                  }
+                }
+            };
+            adicionarPedido();
+
             dispatch( clearCart({}))
             navigate('/orders');
             setModalStatus(false);
+            setShow(false);
         }
 
         setConfirmOrderStatus(false);

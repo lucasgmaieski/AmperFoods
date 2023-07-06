@@ -23,7 +23,7 @@ export const Header = ({search, onSearch}: Props) => {
 
     return (
         <C.Container>
-            <C.Logo src="/assets/logo.png" />
+            <div><C.Logo src="/assets/logo.png" /></div>
             <C.SearchInput 
                 type="text" 
                 placeholder="Digite um Produto"

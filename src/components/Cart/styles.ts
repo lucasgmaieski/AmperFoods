@@ -6,7 +6,7 @@ export const CartArea = styled.div`
     border-top-left-radius: 10px;
     position: fixed;
     bottom: 0;
-    right: 30px;
+    right: clamp(2vw, 4vw, 30px);
 `;
 
 export const CartHeader = styled.div`
@@ -15,6 +15,9 @@ export const CartHeader = styled.div`
     display: flex;
     align-items: center;
     cursor: pointer;
+    @media (max-width:330px) {
+        width: clamp(260px, 90vw, 290px);
+    }
 `;
 
 export const CartIcon = styled.img`
@@ -129,7 +132,6 @@ export const ButtonCheckout = styled.button`
     border-radius:12px;
     cursor: pointer;
     &:disabled {
-        /* background-color: #FA8229; */
         filter: grayscale(.4);
         cursor: not-allowed;
     }

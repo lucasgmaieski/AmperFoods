@@ -8,10 +8,14 @@ export const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 15px;
+    div {
+        max-width: 240px;
+    }
 `;
 export const Logo = styled.img`
-    width: auto;
-    height: 70px;
+    max-width: 100%;
+    height: auto;
 
 `;
 

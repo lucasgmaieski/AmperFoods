@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { OrderItemType } from '../../types/OrderItem';
 import * as C from './styles';
 
@@ -11,18 +10,9 @@ type Props ={
 
 export const OrderItem = ({data, onClick, index, componenteBRef}: Props) => {
 
-    // const componenteBRef = useRef<any>();
-
-    const handleScrollToComponentB = () => {
-      componenteBRef.current.scrollIntoView({
-        behavior: 'smooth',
-      });
-    };
-
     const handleOpenOrder = () => {
         
         onClick(index);
-        console.log("aaaaaaaaa");
         componenteBRef.current.scrollIntoView({
             behavior: 'smooth',
           });
