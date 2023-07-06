@@ -3,17 +3,11 @@ import { ProductsCart } from '../../types/ProductsCart';
 
 type InitialStateProducts = {
     products: ProductsCart[],
-    address: any,
-    discount: number,
-    delivery: number
 }
 export const slice = createSlice({
     name: 'cart',
     initialState: {
         products: [],
-        address: [],
-        discount: 0,
-        delivery: 0
     } as InitialStateProducts,
     reducers: {
         addProduct: (state: InitialStateProducts, action) => {
@@ -51,9 +45,12 @@ export const slice = createSlice({
                     state.products[action.payload.key].qt++;
                 }
             }
+        },
+        clearCart: (state: InitialStateProducts, action) => {
+            state.products = [];
         }
     }
 });
 
-export const {addProduct, changeProduct} = slice.actions;
+export const {addProduct, changeProduct, clearCart} = slice.actions;
 export default slice.reducer;

@@ -4,31 +4,33 @@ export const slice = createSlice({
     name: 'user',
     initialState: {
         token: '',
-        name: 'Lucas',
+        name: '',
+        email: '',
+        address: '',
+        phone: '',
     },
     reducers: {
         setName: (state, action) => {
             state.name = action.payload.name;
         },
         setToken: (state, action) => {
-            state.token = action.payload.token
+            state.token = action.payload.token;
+        },
+        setInfo: (state, action) => {
+            state.name = action.payload.name;
+            state.email = action.payload.email;
+            state.address = action.payload.address;
+            state.phone = action.payload.phone;
+        },
+        clearInfos: (state, action) => {
+            state.token = '';
+            state.name = '';
+            state.email = '';
+            state.address = '';
+            state.phone = '';
         }
     }
 });
 
-export const {setName, setToken} = slice.actions;
+export const {setName, setToken, setInfo, clearInfos} = slice.actions;
 export default slice.reducer;
-
-// const initialState = {
-//     name: 'Teste'
-// };
-
-// export default (state = initialState, action) => {
-//     switch(action.type) {
-//         case 'SET_NAME':
-//             return {...state, name: action.payload.name};
-//         break;
-//     }
-
-//     return state;
-// }
