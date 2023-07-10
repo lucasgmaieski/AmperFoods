@@ -6,7 +6,7 @@ import * as C from './styled';
 import { setInfo, setName, setToken } from '../../redux/reducers/UserReducer';
 import { persistor } from '../../redux/store';
 
-import { auth, firestore } from '../../services/firebaseConfig';
+import { auth, db } from '../../services/firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
@@ -33,7 +33,7 @@ export const Register = () => {
         console.log("Usuário criado e logado automaticamente com uid: " + user.uid);
     
         if (user) {
-            const userDocRef = doc(firestore, 'users', user.uid);
+            const userDocRef = doc(db, 'users', user.uid);
             const userData = { name:nameInput, email: user.email, phone: phoneInput, address: addressInput };
         
             await setDoc(userDocRef, userData);

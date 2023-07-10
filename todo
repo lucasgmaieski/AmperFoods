@@ -39,3 +39,11 @@ Legenda:
 Formas de envio do AUTH:
 - Authorization: Bearer TOKEN
 - QueryString token: TOKEN
+
+
+register -- salvar as informações no localStorage e criar o banco desse usuario no firestore    [✅] criar a estrutura
+login -- pegar as informações do usuario e dos pedidos e salvar no localStorage   [✅]
+finalizar uma compra -- salvar nova ordem no banco e localstorage   [✅]
+limpar historico de ordens -- deletar todas as ordens do banco e localStorage   [✅]
+deletar conta -- deletar todos os dados do banco e localStorage   [✅]
+logout -- limpar todos os dados do localStorage   [✅]

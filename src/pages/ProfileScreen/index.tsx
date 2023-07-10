@@ -3,12 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import * as C from './styled';
-import { setInfo, setName } from '../../redux/reducers/UserReducer';
+import { clearInfos, setInfo, setName } from '../../redux/reducers/UserReducer';
+import { clearCart } from '../../redux/reducers/CartReducer';
+import { clearOrders } from '../../redux/reducers/OrdersReducer';
 import { Header } from '../../components/Header';
-import { logout } from '../../services/util';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../services/firebaseConfig';
+import { deleteUser, signOut } from 'firebase/auth';
+import { auth, db } from '../../services/firebaseConfig';
 import { useIdToken } from 'react-firebase-hooks/auth';
+import { deleteDoc, doc } from 'firebase/firestore';
 
 
 export const ProfileScreen = () => {
@@ -44,6 +46,7 @@ export const ProfileScreen = () => {
 
     const handleSaveButton = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         dispatch( setInfo({
             name: nameInput,
             email: emailInput,
@@ -62,16 +65,57 @@ export const ProfileScreen = () => {
     }
 
     const handleLogout = () => {
-       logout();
-        
+        console.log('antes de entrar no signOut');
+        console.log(auth.currentUser?.email);
+        console.log(auth.currentUser?.getIdTokenResult);
+
+        signOut(auth).then(()=> {
+            console.log("fazendo logout...");
+            console.log(auth.currentUser?.email);
+            console.log(auth.currentUser?.getIdTokenResult);
+            dispatch( clearInfos({}));
+            dispatch( clearCart({}));
+            dispatch( clearOrders({}));
+        }).catch((error)=> {
+          console.error(error);
+        })   
+    }
+    const handleDeleteAccount = async() => {
+        const user = auth.currentUser;
+        if(user) {
+            const uid = user.uid;
+            try {
+                const userDocRef = doc(db, 'users', uid);
+                await deleteDoc(userDocRef);
+          
+                // Documento do usuário excluído com sucesso
+                console.log('deletando documento do usuario do banco');
+                // Usuário excluído com sucesso
+            } catch (error) {
+                // Ocorreu um erro ao excluir os dados do usuário ou a conta do usuário
+                console.error(error);
+            }
+
+            deleteUser(user).then(() => {
+                // User deleted.
+                console.log('deletando usuario');
+                dispatch( clearInfos({}));
+                dispatch( clearCart({}));
+                dispatch( clearOrders({}));
+            }).catch((error) => { 
+                console.error(error); 
+            });
+        }
     }
     return (
         <C.Container>
             <Header search={headerSearch} onSearch={setHeaderSerach}/>
-            <p>current user email{auth.currentUser?.email}</p>
-            <C.Titulo>Perfil do usuário: <strong>{userInfos.name}</strong> </C.Titulo>
+            
             <C.ButtonSignOut onClick={handleLogout}>Sair</C.ButtonSignOut>
+            <C.ButtonSignOut onClick={handleDeleteAccount}>Excluir Conta</C.ButtonSignOut>
             <C.FormArea onSubmit={handleSaveButton}>
+                <C.Titulo>Olá, <strong>{userInfos.name.trim().split(" ")[0]}</strong> </C.Titulo>
+                <p>Aqui você pode alterar suas informações pessoais.</p>
                 <C.Label>
                     Nome:
                     <C.Input type="text" id="name" value={nameInput} onChange={handleInputChange}/>
@@ -93,7 +137,8 @@ export const ProfileScreen = () => {
                     <h4>Salvo com sucesso.</h4>
                 }
             </C.FormArea>
-
+            <p>current user email{auth.currentUser?.email}</p>
+            <C.Titulo>Perfil do usuário: <strong>{userInfos.name}</strong> </C.Titulo>
         </C.Container>
     );
 }

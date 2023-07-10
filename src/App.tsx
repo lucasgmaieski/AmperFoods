@@ -10,13 +10,16 @@ import { PrivateRoute } from './components/PrivateRoute';
 import { Cart } from './components/Cart';
 import { OrdersScreen } from './pages/OrdersScreen';
 import { ProfileScreen } from './pages/ProfileScreen';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
 
 export default () => {
     const name = useAppSelector(state => state.persistedReducer.user.name);
 
     useEffect(()=> {
         
-    }, [])
+    }, []);
+
     return (
         <BrowserRouter>
             <C.Container>
@@ -31,7 +34,8 @@ export default () => {
                         <Route path="/orders" element={<PrivateRoute><OrdersScreen /></PrivateRoute>} />
                         <Route path="/profile" element={<PrivateRoute><ProfileScreen /></PrivateRoute>} />
                         <Route path="/tela2/:nome" element={<Tela2Screen />} />
-                        <Route path="/login" element={<div>Login</div>} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/login" element={<Login />} />
                     </Routes>
                 </C.PageBody>
                 <Cart />

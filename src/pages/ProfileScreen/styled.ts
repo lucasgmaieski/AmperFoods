@@ -7,14 +7,18 @@ export const Container = styled.div`
 
 export const Titulo = styled.div`
     font-size: 20px;
-    color: #fff;
-    margin: 20px;
+    color: #000;
+    margin: 20px 0;
 `;
 export const FormArea = styled.form`
     background-color: #fff;
     padding: 20px;
     border-radius: 20px;
     max-width: 400px;
+    margin: 0 auto;
+    p {
+        margin-bottom: 15px;
+    }
 `;
 export const Label = styled.div`
     display: flex;

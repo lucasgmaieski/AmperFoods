@@ -11,6 +11,8 @@ import { OrderItemType } from '../../types/OrderItem';
 import { OrderOpen } from '../../components/OrderOpen';
 import { FiTrash2 } from 'react-icons/fi';
 import { clearOrders } from '../../redux/reducers/OrdersReducer';
+import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
+import { auth, db } from '../../services/firebaseConfig';
 
 export const OrdersScreen = () => {
     const navigate = useNavigate();
@@ -35,9 +37,27 @@ export const OrdersScreen = () => {
         setOrderOpenIndex(index);
     }
 
-    const handleClearOrders = () => {
-        dispatch( clearOrders({}));
+    const handleClearOrders = async () => {
+        const user = auth.currentUser;
+        if(user) {
+            const uid = user.uid;
+            try {
+                const userDocRef = doc(db, 'users', uid);
+                const ordersQuerySnapshot = await getDocs(collection(userDocRef, 'orders'));
+          
+                const deletePromises = ordersQuerySnapshot.docs.map((doc) => deleteDoc(doc.ref));
+                await Promise.all(deletePromises);
+          
+                // Subcoleção "orderss" excluída com sucesso
+                console.log('Excluindo a subcoleção "orders" do usuário do banco');
+              } catch (error) {
+                // Ocorreu um erro ao excluir a subcoleção "orderss"
+                console.error(error);
+              }
+              dispatch(clearOrders({}));
+        }
     }
+        
     return (
         <C.Container ref={componenteBRef}>
             <Header search={headerSearch} onSearch={setHeaderSerach}/>

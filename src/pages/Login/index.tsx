@@ -40,7 +40,7 @@ export const Login = () => {
                 // get orders in db and save localStorage
                 try {
                 const userDocRef = doc(db, 'users', uid);
-                const pedidosSubcollectionRef = collection(userDocRef, 'orderss');
+                const pedidosSubcollectionRef = collection(userDocRef, 'orders');
                 const pedidosQuery = query(pedidosSubcollectionRef);
                 const pedidosSnapshot = await getDocs(pedidosQuery);
 

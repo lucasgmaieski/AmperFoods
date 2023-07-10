@@ -64,7 +64,7 @@ export const Cart = () => {
               
                   try {
                     const userDocRef = doc(db, 'users', uid);
-                    const pedidosSubcollectionRef = collection(userDocRef, 'orderss');
+                    const pedidosSubcollectionRef = collection(userDocRef, 'orders');
                     await addDoc(pedidosSubcollectionRef, {
                         date: formattedCurrentDate(),
                         status: 1,
