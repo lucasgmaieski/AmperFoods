@@ -11,10 +11,26 @@ import { deleteUser, signOut } from 'firebase/auth';
 import { auth, db } from '../../services/firebaseConfig';
 import { useIdToken } from 'react-firebase-hooks/auth';
 import { deleteDoc, doc } from 'firebase/firestore';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from "@hookform/resolvers/zod";
+import InputMask from "react-input-mask";
+
+
+
+const schema = z.object({
+    name: z.string().min(3, "Digite pelo menos 3 caracteres"),
+    email: z.string().email({message: 'Endereço de email inválido'}),
+    phone: z.number(),
+    phone2: z.string(),
+    address: z.string(),
+    // password: z.string().min(6, 'A senha precisa ter pelo menos 6 caracteres'),
+    // confurmPassword: z.string(),
+});
+type FormProps = z.infer<typeof schema>;
 
 
 export const ProfileScreen = () => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [headerSearch, setHeaderSerach] = useState('');
     const [nameInput, setNameInput] = useState('');
@@ -25,34 +41,36 @@ export const ProfileScreen = () => {
 
     const userInfos = useAppSelector(state => state.persistedReducer.user);
 
+    const [mascaraTelefone, setMascaraTelefone] = useState("(99) 9999-9999");
+
+    
     useEffect(()=>{
         setUserInfos();
     }, [])
-
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if(e.target.id == 'name') {
-            setNameInput(e.target.value);
-        }
-        if(e.target.id == 'phone') {
-            setPhoneInput(e.target.value);
-        }
-        if(e.target.id == 'email') {
-            setEmailInput(e.target.value);
-        }
-        if(e.target.id == 'address') {
-            setAddressInput(e.target.value);
-        }
+    
+    const { handleSubmit, register, formState: { errors}, setValue, watch } = useForm<FormProps>({mode: 'all', reValidateMode: 'onChange', resolver: zodResolver(schema)});
+    const handleForm = (data: FormProps) => {
+        console.log({data});
     }
+    const telefone = watch("phone2");
 
-    const handleSaveButton = (e: ChangeEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        dispatch( setInfo({
-            name: nameInput,
-            email: emailInput,
-            phone: phoneInput,
-            address: addressInput
-        }));
+    useEffect(() => {
+        if (telefone?.length === 10) {
+        setMascaraTelefone("(99) 9999-9999");
+        } else if (telefone?.length === 11) {
+        setMascaraTelefone("(99) 99999-9999");
+        }
+    }, [telefone]);
+    const handleSaveButton = (event: ChangeEvent<HTMLFormElement>) => {
+        event.preventDefault();
+    
+        // dispatch( setInfo({
+        //     name: nameInput,
+        //     email: emailInput,
+        //     phone: phoneInput,
+        //     address: addressInput
+        // }));
+        console.log("deu certo ");
         setUserInfos();
         setSaveSuccess(true);
     }
@@ -65,10 +83,6 @@ export const ProfileScreen = () => {
     }
 
     const handleLogout = () => {
-        console.log('antes de entrar no signOut');
-        console.log(auth.currentUser?.email);
-        console.log(auth.currentUser?.getIdTokenResult);
-
         signOut(auth).then(()=> {
             console.log("fazendo logout...");
             console.log(auth.currentUser?.email);
@@ -87,17 +101,11 @@ export const ProfileScreen = () => {
             try {
                 const userDocRef = doc(db, 'users', uid);
                 await deleteDoc(userDocRef);
-          
-                // Documento do usuário excluído com sucesso
                 console.log('deletando documento do usuario do banco');
-                // Usuário excluído com sucesso
             } catch (error) {
-                // Ocorreu um erro ao excluir os dados do usuário ou a conta do usuário
                 console.error(error);
             }
-
             deleteUser(user).then(() => {
-                // User deleted.
                 console.log('deletando usuario');
                 dispatch( clearInfos({}));
                 dispatch( clearCart({}));
@@ -113,24 +121,54 @@ export const ProfileScreen = () => {
             
             <C.ButtonSignOut onClick={handleLogout}>Sair</C.ButtonSignOut>
             <C.ButtonSignOut onClick={handleDeleteAccount}>Excluir Conta</C.ButtonSignOut>
-            <C.FormArea onSubmit={handleSaveButton}>
+            <C.FormArea onSubmit={handleSubmit(handleForm)}>
                 <C.Titulo>Olá, <strong>{userInfos.name.trim().split(" ")[0]}</strong> </C.Titulo>
                 <p>Aqui você pode alterar suas informações pessoais.</p>
                 <C.Label>
                     Nome:
-                    <C.Input type="text" id="name" value={nameInput} onChange={handleInputChange}/>
+                    <C.Input type="text" id="name"  {...register('name')} />
+                    {errors.name && (
+                        <p className="text-xs italic text-red-500 mt-2">
+                        {errors.name?.message}
+                        </p>
+                    )}
                 </C.Label>
                 <C.Label>
                     Email:
-                    <C.Input type="email" id="email" value={emailInput} onChange={handleInputChange}/>
+                    <C.Input type="email" id="email"  {...register('email')}/>
+                    {errors.email && (
+                        <p className="text-xs italic text-red-500 mt-2">
+                        {errors.email?.message}
+                        </p>
+                    )}
                 </C.Label>
                 <C.Label>
                     Telefone:
-                    <C.Input type="tel" id="phone" value={phoneInput} onChange={handleInputChange}/>
+                    <C.Input type="tel" id="phone"  {...register('phone')} />
+                    {errors.phone && (
+                        <p className="text-xs italic text-red-500 mt-2">
+                        {errors.phone?.message}
+                        </p>
+                    )}
+                </C.Label>
+                <C.Label>
+                    Telefone com mascara:
+                    <InputMask
+                        mask={mascaraTelefone}
+                        maskPlaceholder=''
+                        type={'tel'}
+                        {...register("phone2", { required: true })}
+                        onChange={(event) => setValue("phone2", event.target.value)}
+                    />
                 </C.Label>
                 <C.Label>
                     Endereço:
-                    <C.Input type="text" id="address" value={addressInput} onChange={handleInputChange}/>
+                    <C.Input type="text" id="address"  {...register('address')} />
+                    {errors.address && (
+                        <p className="text-xs italic text-red-500 mt-2">
+                        {errors.address?.message}
+                        </p>
+                    )}
                 </C.Label>
                 <C.ButtonSave type="submit" value="salvar"/>
                 {saveSuccess && 
