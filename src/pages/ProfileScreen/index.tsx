@@ -16,17 +16,22 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputMask from "react-input-mask";
 
-
+const phoneRegex = new RegExp(
+    /^\d{10,11}$/
+  );
 
 const schema = z.object({
     name: z.string().min(3, "Digite pelo menos 3 caracteres"),
     email: z.string().email({message: 'Endereço de email inválido'}),
-    phone: z.number(),
-    phone2: z.string(),
-    address: z.string(),
+    phone: z.string().regex(phoneRegex, 'O número deve ter entre 10 e 11 dígitos'),
+    address: z.string().min(5, "Endereço inválido"),
     // password: z.string().min(6, 'A senha precisa ter pelo menos 6 caracteres'),
     // confurmPassword: z.string(),
-});
+})
+// .refine((fields) => fields.password === fields.confirmPassword, {
+//     path: ['confirmPassword'],
+//     message: 'As senhas precisam ser iguais'
+// });
 type FormProps = z.infer<typeof schema>;
 
 
@@ -41,26 +46,32 @@ export const ProfileScreen = () => {
 
     const userInfos = useAppSelector(state => state.persistedReducer.user);
 
-    const [mascaraTelefone, setMascaraTelefone] = useState("(99) 9999-9999");
 
     
-    useEffect(()=>{
-        setUserInfos();
-    }, [])
     
-    const { handleSubmit, register, formState: { errors}, setValue, watch } = useForm<FormProps>({mode: 'all', reValidateMode: 'onChange', resolver: zodResolver(schema)});
+    
+    const { handleSubmit, register, setValue, formState: { errors} } = useForm<FormProps>({mode: 'all', reValidateMode: 'onChange', resolver: zodResolver(schema)});
     const handleForm = (data: FormProps) => {
         console.log({data});
+        dispatch( setInfo({
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            address: data.address
+        }));
+        console.log("deu certo ");
+        setUserInfos();
+        setSaveSuccess(true);
     }
-    const telefone = watch("phone2");
 
-    useEffect(() => {
-        if (telefone?.length === 10) {
-        setMascaraTelefone("(99) 9999-9999");
-        } else if (telefone?.length === 11) {
-        setMascaraTelefone("(99) 99999-9999");
-        }
-    }, [telefone]);
+    useEffect(()=>{
+        // setUserInfos();
+        setValue("name", userInfos.name || "");
+        setValue("email", userInfos.email || "");
+        setValue("phone", userInfos.phone || "");
+        setValue("address", userInfos.address || "");
+    }, [setValue])
+   
     const handleSaveButton = (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault();
     
@@ -151,16 +162,7 @@ export const ProfileScreen = () => {
                         </p>
                     )}
                 </C.Label>
-                <C.Label>
-                    Telefone com mascara:
-                    <InputMask
-                        mask={mascaraTelefone}
-                        maskPlaceholder=''
-                        type={'tel'}
-                        {...register("phone2", { required: true })}
-                        onChange={(event) => setValue("phone2", event.target.value)}
-                    />
-                </C.Label>
+                
                 <C.Label>
                     Endereço:
                     <C.Input type="text" id="address"  {...register('address')} />

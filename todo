@@ -47,3 +47,6 @@ finalizar uma compra -- salvar nova ordem no banco e localstorage   [✅]
 limpar historico de ordens -- deletar todas as ordens do banco e localStorage   [✅]
 deletar conta -- deletar todos os dados do banco e localStorage   [✅]
 logout -- limpar todos os dados do localStorage   [✅]
+Profile -- atualizar as alterações dos dados do profile no banco de dados []
+
+fazer os loaders:
