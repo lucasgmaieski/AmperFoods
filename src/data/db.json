@@ -10,11 +10,155 @@
       "price": 5
     },
     {
-      "id": 1,
+      "id": 2,
       "id_cat": 1,
       "image": "sadf",
       "ingredients": "Farinha, Açucar, leite",
       "name": "Bolo de Chocolate",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 3,
+      "id_cat": 1,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Bolo de Baunilha",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 4,
+      "id_cat": 1,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Bolo de Banana",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 5,
+      "id_cat": 1,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Bolo de Fubá",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 6,
+      "id_cat": 2,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Torta de Morango",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 7,
+      "id_cat": 2,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Torta de Brigadeiro",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 8,
+      "id_cat": 2,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Torta de Limão",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 9,
+      "id_cat": 3,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Cookie de Amendoim",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 10,
+      "id_cat": 3,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Cookie de Chocolate",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 11,
+      "id_cat": 3,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Cookie de Castanhas",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 12,
+      "id_cat": 3,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Cookie de Chocolate Branco",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 13,
+      "id_cat": 4,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Coxinha de Frango",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 14,
+      "id_cat": 4,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Pastel de Frango",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 15,
+      "id_cat": 4,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Sandwiche de Mortadela",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 16,
+      "id_cat": 4,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Enroladinho de Salsicha",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 17,
+      "id_cat": 4,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Mini Pizza",
+      "points": 0,
+      "price": 5
+    },
+    {
+      "id": 18,
+      "id_cat": 4,
+      "image": "sadf",
+      "ingredients": "Farinha, Açucar, leite",
+      "name": "Sfirra",
       "points": 0,
       "price": 5
     }
@@ -33,12 +177,12 @@
     },
     {
       "id": 3,
-      "name": "Pães",
+      "name": "Cookies",
       "image": "url"
     },
     {
       "id": 4,
-      "name": "Bolos",
+      "name": "Salgados",
       "image": "url"
     }
   ]
