@@ -9,6 +9,7 @@ import { ProductItem } from '../../components/ProductItem';
 import { ProdItem } from '../../types/ProdItem';
 import { Modal } from '../../components/Modal';
 import { ModalProduct } from '../../components/ModalProduct';
+import { Loader } from '../../components/Loader';
 
 let searchTimer: NodeJS.Timeout | undefined = undefined;
 
@@ -19,6 +20,7 @@ export default () => {
     const [products, setProducts] = useState<ProdItem[]>([]);
     const [totalPages, setTotalPages] = useState(0);
 
+    const [loading, setLoading] = useState(false);
     const [modalStatus, setModalStatus] = useState(false);
     const [modalData, setModalData] = useState<ProdItem | null>(null);
 
@@ -27,18 +29,24 @@ export default () => {
     const [activeSearch, setActiveSearch] = useState('');
 
     const getProducts = async () => {
+        setLoading(true);
         const prods = await api.getProducts(activeCategory, activePage, activeSearch);
-        if(prods.error == '') {
-            setProducts(prods.result.data);
-            console.log(products);
-            setTotalPages(prods.result.pages);
-            setActivePage(prods.result.page);
-        }
+        setTimeout(() => {
+            setTotalPages(prods.totalPages);
+            setLoading(false);
+            if(prods.data.length > 0) {
+                setProducts(prods.data);
+                console.log(prods.data);
+                // setTotalPages(prods.totalPages);
+                setActivePage(prods.currentPage);
+            }
+        }, 150);
     }
 
     useEffect(()=>{
         clearTimeout(searchTimer);
         searchTimer = setTimeout(() => {
+            setActivePage(1);
             setActiveSearch(headerSearch);
         }, 2000);
     }, [headerSearch]);
@@ -46,11 +54,10 @@ export default () => {
     useEffect(()=> {
         const getCategories = async () => {
             const cat = await api.getCategories();
-            if(cat.error == '') {
-                setCategories(cat.result);
+            if(cat.length > 0) {
+                setCategories(cat);
             }
         };
-
         getCategories();
     }, []);
 
@@ -76,6 +83,7 @@ export default () => {
                             data={{id:0, name:'Todas as categorias', image:"/assets/food-and-restaurant-af.png"}} 
                             activeCategory={activeCategory}
                             setActiveCategory={setActiveCategory}
+                            setActivePage={setActivePage}
                         />
                         {categories.map((item, index)=>(
                             <CategoryItem 
@@ -83,6 +91,7 @@ export default () => {
                                 data={item} 
                                 activeCategory={activeCategory}
                                 setActiveCategory={setActiveCategory}
+                                setActivePage={setActivePage}
                             />
                         ))}
                     </C.CategoryList>
@@ -101,6 +110,12 @@ export default () => {
                         ))}
                     </C.ProductList>
                 </C.ProductArea>
+            }
+            {products.length === 0 && !loading && 
+                <C.NoProducts>Nenhum produto encontrado!</C.NoProducts>
+            }
+            {loading && 
+                <Loader status={true} isCheck={false} />
             }
 
             {totalPages > 0 &&

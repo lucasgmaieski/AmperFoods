@@ -5,6 +5,12 @@ export const Container = styled.div`
     padding: 15px;
 `;
 
+export const NoProducts = styled.p`
+    color: #fff;
+    margin-top: 40px;
+    font-weight: 600;
+    font-size: 1.6rem;
+`;
 export const CategoryArea = styled.div`
     color: #fff;
     margin-top: 20px;
