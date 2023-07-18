@@ -5,16 +5,18 @@ import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import * as C from './styled';
 import { clearInfos, setInfo, setName } from '../../redux/reducers/UserReducer';
 import { clearCart } from '../../redux/reducers/CartReducer';
-import { clearOrders } from '../../redux/reducers/OrdersReducer';
+import { clearOrders, saveOrder } from '../../redux/reducers/OrdersReducer';
 import { Header } from '../../components/Header';
 import { deleteUser, signOut } from 'firebase/auth';
 import { auth, db } from '../../services/firebaseConfig';
 import { useIdToken } from 'react-firebase-hooks/auth';
-import { deleteDoc, doc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, onSnapshot, query, updateDoc } from 'firebase/firestore';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputMask from "react-input-mask";
+import { Loader } from '../../components/Loader';
+import { userInfo } from 'os';
 
 const phoneRegex = new RegExp(
     /^\d{10,11}$/
@@ -38,17 +40,30 @@ type FormProps = z.infer<typeof schema>;
 export const ProfileScreen = () => {
     const dispatch = useDispatch();
     const [headerSearch, setHeaderSerach] = useState('');
-    const [nameInput, setNameInput] = useState('');
-    const [emailInput, setEmailInput] = useState('');
-    const [addressInput, setAddressInput] = useState('');
-    const [phoneInput, setPhoneInput] = useState('');
     const [saveSuccess, setSaveSuccess] = useState(false);
 
     const userInfos = useAppSelector(state => state.persistedReducer.user);
 
-
-    
-    
+    useEffect(()=>{
+        const user = auth.currentUser;
+        if (user) {
+            const userId = user.uid;
+            const userDocRef = doc(db, 'users', userId);
+            const listenInfoUser = onSnapshot(userDocRef, (snapshot) => {
+            // O código aqui será executado sempre que houver alterações nos dados do usuário
+            const userData = snapshot.data();
+            console.log('userData:');
+            console.log(userData);
+            dispatch( setInfo({
+                name: userData?.name,
+                email: userData?.email,
+                phone: userData?.phone,
+                address: userData?.address
+            }));
+            });
+            return () => listenInfoUser();
+        }
+    }, []);
     
     const { handleSubmit, register, setValue, formState: { errors} } = useForm<FormProps>({mode: 'all', reValidateMode: 'onChange', resolver: zodResolver(schema)});
     const handleForm = (data: FormProps) => {
@@ -59,39 +74,36 @@ export const ProfileScreen = () => {
             phone: data.phone,
             address: data.address
         }));
-        console.log("deu certo ");
-        setUserInfos();
+        const updateUserInfos = async () => {
+            const user = auth.currentUser;
+            try {
+                if (user) {
+                    const uid = user.uid;
+                    const userDocRef = doc(db, 'users', uid);
+    
+                    await updateDoc(userDocRef, {
+                        name: data.name,
+                        email: data.email,
+                        phone: data.phone,
+                        address: data.address
+                    });
+                }
+            } catch (error) {
+                
+            }
+            
+        };
+        updateUserInfos();
         setSaveSuccess(true);
+        console.log("deu certo ");
     }
 
     useEffect(()=>{
-        // setUserInfos();
         setValue("name", userInfos.name || "");
         setValue("email", userInfos.email || "");
         setValue("phone", userInfos.phone || "");
         setValue("address", userInfos.address || "");
-    }, [setValue])
-   
-    const handleSaveButton = (event: ChangeEvent<HTMLFormElement>) => {
-        event.preventDefault();
-    
-        // dispatch( setInfo({
-        //     name: nameInput,
-        //     email: emailInput,
-        //     phone: phoneInput,
-        //     address: addressInput
-        // }));
-        console.log("deu certo ");
-        setUserInfos();
-        setSaveSuccess(true);
-    }
-
-    const setUserInfos = () => {
-        setNameInput(userInfos.name);
-        setAddressInput(userInfos.address);
-        setEmailInput(userInfos.email);
-        setPhoneInput(userInfos.phone);
-    }
+    }, [setValue]);
 
     const handleLogout = () => {
         signOut(auth).then(()=> {
@@ -174,7 +186,7 @@ export const ProfileScreen = () => {
                 </C.Label>
                 <C.ButtonSave type="submit" value="salvar"/>
                 {saveSuccess && 
-                    <h4>Salvo com sucesso.</h4>
+                    <Loader status={saveSuccess} isCheck={true}/>
                 }
             </C.FormArea>
             <p>current user email{auth.currentUser?.email}</p>

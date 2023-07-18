@@ -15,15 +15,12 @@ export const FormArea = styled.form`
     max-width: 400px;
     margin: 20px auto;
 `;
-export const InputArea = styled.div`
+export const Label = styled.div`
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin-bottom: 25px;
+    margin-bottom: 7px;
     color: #FA8229;
-`;
-export const Label = styled.label`
-    font-weight: 600;
 `;
 export const Input = styled.input`
     padding: 10px 10px;
@@ -35,7 +32,7 @@ export const Input = styled.input`
 `;
 export const Submit = styled.button`
     width: fit-content;
-    margin: auto;
+    margin: 10px auto;
     display: block;
     background-color: #FA8229;
     border: none;

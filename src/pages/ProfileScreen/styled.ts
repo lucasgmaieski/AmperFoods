@@ -11,6 +11,7 @@ export const Titulo = styled.div`
     margin: 20px 0;
 `;
 export const FormArea = styled.form`
+    position: relative;
     background-color: #fff;
     padding: 20px;
     border-radius: 20px;
@@ -24,7 +25,7 @@ export const Label = styled.div`
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin-bottom: 25px;
+    margin-bottom: 7px;
     color: #FA8229;
 `;
 export const Input = styled.input`

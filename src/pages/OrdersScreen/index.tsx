@@ -3,15 +3,15 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import * as C from './styled';
-import { setName } from '../../redux/reducers/UserReducer';
+import { setInfo, setName } from '../../redux/reducers/UserReducer';
 import { persistor } from '../../redux/store';
 import { Header } from '../../components/Header';
 import { OrderItem } from '../../components/OrderItem';
 import { OrderItemType } from '../../types/OrderItem';
 import { OrderOpen } from '../../components/OrderOpen';
 import { FiTrash2 } from 'react-icons/fi';
-import { clearOrders } from '../../redux/reducers/OrdersReducer';
-import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
+import { clearOrders, saveOrder } from '../../redux/reducers/OrdersReducer';
+import { collection, deleteDoc, doc, getDocs, onSnapshot, query } from 'firebase/firestore';
 import { auth, db } from '../../services/firebaseConfig';
 
 export const OrdersScreen = () => {
@@ -27,10 +27,6 @@ export const OrdersScreen = () => {
     useEffect(()=>{
         setOrderOpenIndex(getOrders.length -1);
     }, [getOrders]);
-
-    const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch( setName({name: e.target.value}));
-    }
 
     const handleIndexOrderOpen = (index: number) => {
         index = getOrders.length - index -1;

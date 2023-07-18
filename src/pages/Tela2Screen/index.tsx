@@ -9,20 +9,14 @@ import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
 import { auth, db } from '../../services/firebaseConfig';
 import { saveOrder } from '../../redux/reducers/OrdersReducer';
 import { updateLocalStorage } from '../../services/util';
+import { Loader } from '../../components/Loader';
 
 
 export default () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    let { nome } = useParams();
-
     const name = useAppSelector(state => state.persistedReducer.user.name);
-
-    const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-        // dispatch( setName({name: e.target.value}));
-        console.log(name);
-    }
 
     const handleInfosProfile = async () => {
       const user = auth.currentUser;
@@ -47,16 +41,21 @@ export default () => {
       }
     }
 
+    const handleClickLoader = () => {
+
+    }
+
     return (
         <C.Container>
             <C.Titulo>Tela2 de {name}</C.Titulo>
 
-            <input type="text" value={name} onChange={handleTextChange} />
 
             <button onClick={handleInfosProfile}>mostrar informações do perfil do usuario</button>
             <button onClick={updateLocalStorage}>listar pedido</button>
             <button onClick={()=>navigate(-1)}>Voltar</button>
             <button onClick={()=> (persistor.purge())}>Limpar persistor</button>
+            <button onClick={handleClickLoader}>Ativar loader</button>
+            <Loader status={true}/>
         </C.Container>
     );
 }
