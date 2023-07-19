@@ -5,11 +5,13 @@ type Props = {
     data: CatItem;
     activeCategory: number;
     setActiveCategory: React.Dispatch<React.SetStateAction<number>>;
+    setActivePage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const CategoryItem = ({data, activeCategory, setActiveCategory}: Props) => {
+export const CategoryItem = ({data, activeCategory, setActiveCategory, setActivePage}: Props) => {
     const handleCategoryClick = () => {
         setActiveCategory(data.id);
+        setActivePage(1);
     }
 
     return (

@@ -8,9 +8,9 @@ import { formattedCurrentDate } from '../../helpers/dataHelper';
 import { saveOrder } from '../../redux/reducers/OrdersReducer';
 import { Modal } from '../Modal';
 import { ModalCheckout } from '../ModalCheckout';
-import { adicionarPedido } from '../../services/util';
-import { addDoc, collection, doc } from 'firebase/firestore';
+import { addDoc, collection, doc, onSnapshot } from 'firebase/firestore';
 import { auth, db } from '../../services/firebaseConfig';
+import { setInfo, setToken } from '../../redux/reducers/UserReducer';
 
 export const Cart = () => {
     const navigate = useNavigate();
@@ -34,15 +34,15 @@ export const Cart = () => {
             return accumulator + (product.qt * product.price);
         }, 0));
         
-        console.log(amount);
+        // console.log(amount);
         const dataAtual = new Date();
-        console.log(dataAtual);
-        console.log(formattedCurrentDate());
+        // console.log(dataAtual);
+        // console.log(formattedCurrentDate());
     }, [products]);
 
     useEffect(()=>{
         //preencher as ordens e limpar o carrinho
-        if(confirmOrderStatus) {
+        if(confirmOrderStatus && userInfos.token) {
             dispatch( saveOrder({
                 date: formattedCurrentDate(),
                 status: 1,
@@ -55,10 +55,7 @@ export const Cart = () => {
             }));
 
             const adicionarPedido = async () => {
-                console.log("adicionando pedido ...")
-
                 const user = auth.currentUser;
-              
                 if (user) {
                   const uid = user.uid;
               
@@ -89,6 +86,13 @@ export const Cart = () => {
             navigate('/orders');
             setModalStatus(false);
             setShow(false);
+        } else if (confirmOrderStatus && !userInfos.token) {
+            setModalStatus(false);
+            setShow(false);
+            console.log('você não esta logado para fazer pedido. Faça login');
+            navigate('/login');
+        } else {
+            
         }
 
         setConfirmOrderStatus(false);
@@ -149,7 +153,7 @@ export const Cart = () => {
                         <C.AddressText>
                             {userInfos.address}
                         </C.AddressText>
-                        <C.AddressEditIcon src="/assets/edit.png" />
+                        {/* <C.AddressEditIcon src="/assets/edit.png" /> */}
                     </C.AddressInfosArea>
                 </C.AddressArea>
                 <C.CouponArea>
