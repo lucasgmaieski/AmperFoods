@@ -16,26 +16,29 @@ export const Container = styled.div`
 export const Logo = styled.img`
     max-width: 100%;
     height: auto;
-
+    margin: auto;
 `;
+export const SocialArea = styled.div`
+    display: flex;
+    
+    a {
+        padding: 5px 5px 2px;
+        border-radius: 7px;
+        display: block;
+        margin-left: 10px;
+        background-color: #FA8229;
+        transition: all ease .3s;
 
-export const SearchInput = styled.input<{active: string}>`
-    border: 0;
-    border-radius: 25px;
-    width: ${props=> props.active == 'true' ? 300 : 0}px;
-    height: 50px;
-    background-color: #fff;
-    background-image: url('/assets/search-af.png');
-    background-size: 30px;
-    background-repeat: no-repeat;
-    background-position: 10px center;
-    font-size: 15px;
-    outline: 0;
-    padding-left: 50px;
-    transition: all ease .2s;
-    cursor: pointer;
+        &:hover {
+            transform: translateY(-3px);
+            color: #fff;
+        }
 
-    &:focus {
-        cursor: text;
+        svg {
+            color: #fff;
+            font-size: 1.7rem;
+            
+        }
     }
+    
 `;
