@@ -21,6 +21,7 @@ export const Label = styled.div`
     gap: 5px;
     margin-bottom: 7px;
     color: #FA8229;
+    font-weight: 600;
 `;
 export const Input = styled.input`
     padding: 10px 10px;
@@ -39,6 +40,7 @@ export const Submit = styled.button`
     border: none;
     padding: 10px 20px;
     color: #fff;
+    font-weight: 700;
     border-radius:12px;
     cursor: pointer;
 `;

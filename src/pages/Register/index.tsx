@@ -12,6 +12,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ErrorInput } from '../../components/ErrorInput';
 
 const phoneRegex = new RegExp(
     /^\d{10,11}$/
@@ -125,54 +126,42 @@ export const Register = () => {
                     Nome:
                     <C.Input type="text" id="name"  {...register('name')} />
                     {errors.name && (
-                        <p className="text-xs italic text-red-500 mt-2">
-                        {errors.name?.message}
-                        </p>
+                        <ErrorInput message={errors.name?.message} />
                     )}
                 </C.Label>
                 <C.Label>
                     Email:
                     <C.Input type="text" id="email"  {...register('email')} />
                     {errors.email && (
-                        <p className="text-xs italic text-red-500 mt-2">
-                        {errors.email?.message}
-                        </p>
+                        <ErrorInput message={errors.email?.message} />
                     )}
                 </C.Label>
                 <C.Label>
                     Telefone:
                     <C.Input type="text" id="phone"  {...register('phone')} />
                     {errors.phone && (
-                        <p className="text-xs italic text-red-500 mt-2">
-                        {errors.phone?.message}
-                        </p>
+                        <ErrorInput message={errors.phone?.message} />
                     )}
                 </C.Label>
                 <C.Label>
                     Endereço:
                     <C.Input type="text" id="address"  {...register('address')} />
                     {errors.address && (
-                        <p className="text-xs italic text-red-500 mt-2">
-                        {errors.address?.message}
-                        </p>
+                        <ErrorInput message={errors.address?.message} />
                     )}
                 </C.Label>
                 <C.Label>
                     Senha:
                     <C.Input type="text" id="password"  {...register('password')} />
                     {errors.password && (
-                        <p className="text-xs italic text-red-500 mt-2">
-                        {errors.password?.message}
-                        </p>
+                        <ErrorInput message={errors.password?.message} />
                     )}
                 </C.Label>
                 <C.Label>
                     Confirmar senha:
                     <C.Input type="text" id="confirmPassword"  {...register('confirmPassword')} />
                     {errors.confirmPassword && (
-                        <p className="text-xs italic text-red-500 mt-2">
-                        {errors.confirmPassword?.message}
-                        </p>
+                        <ErrorInput message={errors.confirmPassword?.message} />
                     )}
                 </C.Label>
                     
