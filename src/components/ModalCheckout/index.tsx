@@ -73,8 +73,8 @@ export const ModalCheckout = ({totalPayable, setModalStatus, setConfirmOrderStat
                 <span>R$ {totalPayable.toFixed(2)}</span>
             </C.TotalPayable>
             <C.ProductButtons>
-                <C.ProductButton small={'true'} onClick={handleCancelButton}>Cancelar</C.ProductButton>
-                <C.ProductButton onClick={handleConfirmOrder}>Confirmar Pedido</C.ProductButton>
+                <C.ProductButton small={'true'} onClick={handleCancelButton} title='Cancelar'>Cancelar</C.ProductButton>
+                <C.ProductButton onClick={handleConfirmOrder} editing={editing.toString()} disabled={editing} title={editing ? 'Confirme a alteração do endereço' : 'Confirmar Pedido'}>Confirmar Pedido</C.ProductButton>
             </C.ProductButtons>
         </C.Container>
     )

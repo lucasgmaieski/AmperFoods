@@ -14,7 +14,7 @@ export const ProductButtons = styled.div`
     align-items: end;
 `;
 
-export const ProductButton = styled.button<{small?: string}>`
+export const ProductButton = styled.button<{small?: string, editing?: string}>`
     border: 0;
     background-color: #E35319;
     box-shadow: 4px 5px 0px rgba(0, 0, 0, 0.16);
@@ -24,7 +24,7 @@ export const ProductButton = styled.button<{small?: string}>`
     padding: ${props=>props.small ? '5px 10px': '10px 20px'};
     margin-left: 10px;
     border-radius: 5px;
-    cursor: pointer;
+    cursor: ${props=>props.editing == 'true' ? 'not-allowed' : 'pointer'};
 `;
 
 export const AddressArea = styled.div`

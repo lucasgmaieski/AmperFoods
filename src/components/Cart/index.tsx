@@ -83,9 +83,9 @@ export const Cart = () => {
             adicionarPedido();
 
             dispatch( clearCart({}))
-            navigate('/orders');
             setModalStatus(false);
             setShow(false);
+            navigate('/orders');
         } else if (confirmOrderStatus && !userInfos.token) {
             setModalStatus(false);
             setShow(false);

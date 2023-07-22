@@ -10,6 +10,15 @@ export const Container = styled.div`
     align-items: center;
     color: #E35319;
     cursor: pointer;
+
+    /*Barra pela direita*/
+    position: relative;
+    transition: all ease .4s;
+
+    &:hover {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.56);
+        background-color: #f7f7f7;
+    }
 `;
 export const UpperArea = styled.div`
     display: flex;

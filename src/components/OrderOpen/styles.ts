@@ -11,6 +11,12 @@ export const Container = styled.div`
     color: #E35319;
     cursor: pointer;
     margin: 20px 0;
+    transition: all ease .4s;
+
+    &:hover {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.56);
+        background-color: #f7f7f7;
+    }
 `;
 export const TimeLineArea = styled.div`
     width: 100%;
@@ -49,8 +55,6 @@ export const StatusDescription = styled.div`
     }
 `;
 export const DetailsArea = styled.div`
-    /* display: flex;
-    justify-content: space-between; */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
     gap: 10px;

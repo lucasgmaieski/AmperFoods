@@ -23,7 +23,7 @@ export const HeaderHome = ({search, onSearch}: Props) => {
 
     return (
         <C.Container>
-            <div><C.Logo src="/assets/logo.png" /></div>
+            <div><C.Logo src="/assets/logo-amperfoods-orange-2.png" /></div>
             <C.SearchInput 
                 type="text" 
                 placeholder="Digite um Produto"
