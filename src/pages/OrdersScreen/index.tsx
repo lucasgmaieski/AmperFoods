@@ -3,22 +3,17 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import * as C from './styled';
-import { setInfo, setName } from '../../redux/reducers/UserReducer';
-import { persistor } from '../../redux/store';
 import { Header } from '../../components/Header';
 import { OrderItem } from '../../components/OrderItem';
-import { OrderItemType } from '../../types/OrderItem';
 import { OrderOpen } from '../../components/OrderOpen';
 import { FiTrash2 } from 'react-icons/fi';
-import { clearOrders, saveOrder } from '../../redux/reducers/OrdersReducer';
+import { clearOrders} from '../../redux/reducers/OrdersReducer';
 import { collection, deleteDoc, doc, getDocs, onSnapshot, query } from 'firebase/firestore';
 import { auth, db } from '../../services/firebaseConfig';
 
 export const OrdersScreen = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [headerSearch, setHeaderSerach] = useState('');
-    const [orders, setOrders] = useState<OrderItemType[]>([]);
     const [orderOpenIndex, setOrderOpenIndex] = useState(0)
     const componenteBRef = useRef<HTMLInputElement>(null);
 
@@ -56,27 +51,34 @@ export const OrdersScreen = () => {
         
     return (
         <C.Container ref={componenteBRef}>
-            <Header search={headerSearch} onSearch={setHeaderSerach}/>
-            {getOrders.length != 0 && 
+            <Header />
+            {getOrders.length > 0 && 
                 <OrderOpen data={getOrders[orderOpenIndex]}/>
             }
             <C.HeaderList>
-                <h3>Histórico de pedidos</h3>
-                {getOrders.length != 0 && 
-                    <C.Button onClick={handleClearOrders}>
-                        <FiTrash2 /> Limpar Hístórico
-                    </C.Button>
+                {getOrders.length > 0 && 
+                    <>
+                        <h3>Histórico de pedidos</h3>
+                        <C.Button onClick={handleClearOrders}>
+                            <FiTrash2 /> Limpar Hístórico
+                        </C.Button>
+                    </>
                 }
             </C.HeaderList>
-            <C.OrdersArea>
+            {getOrders.length == 0 && 
+                <C.NoProductsArea>
+                    <p>Você ainda não tem pedidos registrados.</p>
+                    <C.Button>
+                        <Link to={'/'}>Faça um Pedido</Link>
+                    </C.Button>
+                </C.NoProductsArea>
+            }
+            <C.OrdersArea orderOpenIndex={getOrders.length - orderOpenIndex -1}>
                 {getOrders.slice().reverse().map((order, index)=>(
                     <OrderItem key={index} data={order} onClick={handleIndexOrderOpen} index={index} componenteBRef={componenteBRef}/>
                 ))}
-                {getOrders.length == 0 && <p>Você ainda não tem pedidos registrados. <C.Button>
-                    <Link to={'/'}>Faça um Pedido</Link>
-                </C.Button> </p> }
             </C.OrdersArea>
-            <p>O índice do pedido selecionado é: {orderOpenIndex}</p>
+            <p>item ativo {orderOpenIndex}</p>
         </C.Container>
     );
 }

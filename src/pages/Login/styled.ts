@@ -4,16 +4,17 @@ export const Container = styled.div`
     width: 100%
 `;
 
-export const Titulo = styled.h1`
+export const Titulo = styled.h2`
     text-align: center;
-    color: #fff;
+    color: #FA8229;
+    margin-bottom: 15px;
 `;
 export const FormArea = styled.form`
     background-color: #fff;
     padding: 20px;
     border-radius: 20px;
     max-width: 400px;
-    margin: 20px auto;
+    margin: 10vh auto;
 `;
 export const Label = styled.div`
     display: flex;
@@ -38,8 +39,14 @@ export const Submit = styled.button`
     background-color: #FA8229;
     border: none;
     padding: 10px 20px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     color: #fff;
     font-weight: 700;
     border-radius:12px;
     cursor: pointer;
+    transition: all ease .3s;
+    &:hover {
+        background-color: #f17a22;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.36);
+    }
 `;

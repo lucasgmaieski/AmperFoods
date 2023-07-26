@@ -14,6 +14,9 @@ export const NoProducts = styled.p`
 export const CategoryArea = styled.div`
     color: #fff;
     margin-top: 20px;
+    h3 {
+        text-shadow: 2px 1px 2px #E35319;
+    }
 `;
 
 export const CategoryList = styled.div`
@@ -34,7 +37,7 @@ export const ProductList = styled.div`
     @media (max-width: 991px) {
         grid-template-columns: repeat(2, 1fr);
     }
-    @media (max-width: 660px) {
+    @media (max-width: 680px) {
         grid-template-columns: repeat(1, 1fr);
     }
 `;
@@ -47,13 +50,18 @@ export const ProductPaginationArea = styled.div`
 `;
 
 export const ProductPaginationItem = styled.div<{active: number, current: number}>`
-    background-color: ${props=>props.active == props.current ? '#ccc' : '#fff'};
+    background-color: ${props=>props.active == props.current ? '#E35319' : '#fff'};
     text-decoration: ${props=>props.active == props.current ? 'underline' : 'none'};
     padding: 5px 10px;
     border-radius: 5px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     cursor: pointer;
-    color: #E35319;
+    color: ${props=>props.active == props.current ? '#fff' : '#FA8229' };
     margin-right: 10px;
     transition: all ease .4s;
+
+    &:hover {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.56);
+        background-color: ${props=>props.active == props.current ? '#E35319' : '#f7f7f7'};
+    }
 `;

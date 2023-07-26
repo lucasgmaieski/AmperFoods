@@ -191,9 +191,9 @@ export const Login = () => {
     return (
         <C.Container>
             <h2>currentUser uid: {auth.currentUser?.uid}</h2>
-            <C.Titulo>Faça Login para comprar</C.Titulo>
 
             <C.FormArea onSubmit={handleSubmit(handleForm)}>
+            <C.Titulo>Faça Login para comprar</C.Titulo>
                 <C.Label>
                     Email:
                     <C.Input type="text" id="email"  {...register('email')} />

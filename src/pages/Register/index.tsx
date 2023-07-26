@@ -119,9 +119,9 @@ export const Register = () => {
     
     return (
         <C.Container>
-            <C.Titulo>Por favor digite suas informações de Cadastro</C.Titulo>
 
             <C.FormArea onSubmit={handleSubmit(handleForm)}>
+                <C.Titulo>Por favor digite suas informações de Cadastro</C.Titulo>
                 <C.Label>
                     Nome:
                     <C.Input type="text" id="name"  {...register('name')} />

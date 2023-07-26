@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import InputMask from "react-input-mask";
 import { Loader } from '../../components/Loader';
 import { userInfo } from 'os';
+import { ErrorInput } from '../../components/ErrorInput';
 
 const phoneRegex = new RegExp(
     /^\d{10,11}$/
@@ -140,10 +141,9 @@ export const ProfileScreen = () => {
     }
     return (
         <C.Container>
-            <Header search={headerSearch} onSearch={setHeaderSerach}/>
+            <Header />
             
-            <C.ButtonSignOut onClick={handleLogout}>Sair</C.ButtonSignOut>
-            <C.ButtonSignOut onClick={handleDeleteAccount}>Excluir Conta</C.ButtonSignOut>
+            
             <C.FormArea onSubmit={handleSubmit(handleForm)}>
                 <C.Titulo>Olá, <strong>{userInfos.name.trim().split(" ")[0]}</strong> </C.Titulo>
                 <p>Aqui você pode alterar suas informações pessoais.</p>
@@ -151,27 +151,21 @@ export const ProfileScreen = () => {
                     Nome:
                     <C.Input type="text" id="name"  {...register('name')} />
                     {errors.name && (
-                        <p className="text-xs italic text-red-500 mt-2">
-                        {errors.name?.message}
-                        </p>
+                        <ErrorInput message={errors.name?.message} />
                     )}
                 </C.Label>
                 <C.Label>
                     Email:
-                    <C.Input type="email" id="email"  {...register('email')}/>
+                    <C.Input type="email" id="email" readOnly title="O email não pode ser alterado." {...register('email')}/>
                     {errors.email && (
-                        <p className="text-xs italic text-red-500 mt-2">
-                        {errors.email?.message}
-                        </p>
+                        <ErrorInput message={errors.email?.message} />
                     )}
                 </C.Label>
                 <C.Label>
                     Telefone:
                     <C.Input type="tel" id="phone"  {...register('phone')} />
                     {errors.phone && (
-                        <p className="text-xs italic text-red-500 mt-2">
-                        {errors.phone?.message}
-                        </p>
+                        <ErrorInput message={errors.phone?.message} />
                     )}
                 </C.Label>
                 
@@ -179,15 +173,17 @@ export const ProfileScreen = () => {
                     Endereço:
                     <C.Input type="text" id="address"  {...register('address')} />
                     {errors.address && (
-                        <p className="text-xs italic text-red-500 mt-2">
-                        {errors.address?.message}
-                        </p>
+                        <ErrorInput message={errors.address?.message} />
                     )}
                 </C.Label>
                 <C.ButtonSave type="submit" value="salvar"/>
                 {saveSuccess && 
                     <Loader status={saveSuccess} isCheck={true}/>
                 }
+                <C.ButtonsArea>
+                    <C.Button onClick={handleLogout}>Sair</C.Button>
+                    <C.Button onClick={handleDeleteAccount}>Excluir Conta</C.Button>
+                </C.ButtonsArea>
             </C.FormArea>
             <p>current user email{auth.currentUser?.email}</p>
             <C.Titulo>Perfil do usuário: <strong>{userInfos.name}</strong> </C.Titulo>

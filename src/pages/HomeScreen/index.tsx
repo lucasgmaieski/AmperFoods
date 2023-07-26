@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from "react-router-dom";
 import * as C from './styled';
-import { Header } from '../../components/Header';
 import { api } from '../../api';
 import { CategoryItem } from '../../components/CategoryItem';
 import { CatItem } from '../../types/CatItem';
@@ -10,6 +9,7 @@ import { ProdItem } from '../../types/ProdItem';
 import { Modal } from '../../components/Modal';
 import { ModalProduct } from '../../components/ModalProduct';
 import { Loader } from '../../components/Loader';
+import { HeaderHome } from '../../components/HeaderHome';
 
 let searchTimer: NodeJS.Timeout | undefined = undefined;
 
@@ -73,14 +73,14 @@ export default () => {
     
     return (
         <C.Container>
-            <Header search={headerSearch} onSearch={setHeaderSerach}/>
+            <HeaderHome search={headerSearch} onSearch={setHeaderSerach}/>
 
             {categories.length > 0 &&
                 <C.CategoryArea>
-                    Selecione uma categoria
+                    <h3>Selecione uma categoria</h3>
                     <C.CategoryList>
                         <CategoryItem 
-                            data={{id:0, name:'Todas as categorias', image:"/assets/food-and-restaurant-af.png"}} 
+                            data={{id:0, name:'Todas as categorias', image:"/assets/categories/food-and-restaurant-af.png"}} 
                             activeCategory={activeCategory}
                             setActiveCategory={setActiveCategory}
                             setActivePage={setActivePage}
@@ -118,7 +118,7 @@ export default () => {
                 <Loader status={true} isCheck={false} />
             }
 
-            {totalPages > 0 &&
+            {totalPages > 1 && !loading &&
                 <C.ProductPaginationArea>
                     {Array(totalPages).fill(0).map((item, index)=>(
                         <C.ProductPaginationItem 
