@@ -28,8 +28,6 @@ const schema = z.object({
     email: z.string().email({message: 'Endereço de email inválido'}),
     phone: z.string().regex(phoneRegex, 'O número deve ter entre 10 e 11 dígitos'),
     address: z.string().min(5, "Endereço inválido"),
-    // password: z.string().min(6, 'A senha precisa ter pelo menos 6 caracteres'),
-    // confurmPassword: z.string(),
 })
 // .refine((fields) => fields.password === fields.confirmPassword, {
 //     path: ['confirmPassword'],
@@ -40,8 +38,9 @@ type FormProps = z.infer<typeof schema>;
 
 export const ProfileScreen = () => {
     const dispatch = useDispatch();
-    const [headerSearch, setHeaderSerach] = useState('');
-    const [saveSuccess, setSaveSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [loadingFinish, setLoadingFinish] = useState(false);
+    const [error, setError] = useState(false);
 
     const userInfos = useAppSelector(state => state.persistedReducer.user);
 
@@ -68,6 +67,9 @@ export const ProfileScreen = () => {
     
     const { handleSubmit, register, setValue, formState: { errors} } = useForm<FormProps>({mode: 'all', reValidateMode: 'onChange', resolver: zodResolver(schema)});
     const handleForm = (data: FormProps) => {
+        setLoadingFinish(false);
+        setError(false);
+        setLoading(true);
         console.log({data});
         dispatch( setInfo({
             name: data.name,
@@ -78,6 +80,7 @@ export const ProfileScreen = () => {
         const updateUserInfos = async () => {
             const user = auth.currentUser;
             try {
+                console.log('entrou no try');
                 if (user) {
                     const uid = user.uid;
                     const userDocRef = doc(db, 'users', uid);
@@ -88,15 +91,24 @@ export const ProfileScreen = () => {
                         phone: data.phone,
                         address: data.address
                     });
+                    setLoadingFinish(true);
+                    setTimeout(() => {
+                        setLoadingFinish(false);
+                        setLoading(false);
+                    }, 2000);
+                    console.log("deu certo ");
                 }
             } catch (error) {
-                
+                console.log(error);
+                setError(true);
+            } finally {
+                setTimeout(() => {
+                    setLoading(false);
+                }, 2000);
             }
-            
         };
         updateUserInfos();
-        setSaveSuccess(true);
-        console.log("deu certo ");
+
     }
 
     useEffect(()=>{
@@ -104,6 +116,7 @@ export const ProfileScreen = () => {
         setValue("email", userInfos.email || "");
         setValue("phone", userInfos.phone || "");
         setValue("address", userInfos.address || "");
+        if(loading) setLoading(false);
     }, [setValue]);
 
     const handleLogout = () => {
@@ -177,8 +190,8 @@ export const ProfileScreen = () => {
                     )}
                 </C.Label>
                 <C.ButtonSave type="submit" value="salvar"/>
-                {saveSuccess && 
-                    <Loader status={saveSuccess} isCheck={true}/>
+                {loading && 
+                    <Loader status={loading} loadingFinish={loadingFinish} isError={error} dark={true}/>
                 }
                 <C.ButtonsArea>
                     <C.Button onClick={handleLogout}>Sair</C.Button>

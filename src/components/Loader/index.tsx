@@ -3,12 +3,14 @@ import React, { MouseEvent, ReactNode } from 'react';
 
 type Props = {
     status: boolean;
-    isCheck: boolean;
+    loadingFinish: boolean;
+    isError: boolean;
+    dark: boolean;
 }
-export const Loader = ({ status, isCheck}: Props) => {
+export const Loader = ({ status, loadingFinish, isError, dark}: Props) => {
     return (
-        <C.Container status={status.toString()}>
-        {isCheck &&
+        <C.Container status={status.toString()} dark={dark?.toString()}>
+        {loadingFinish && !isError &&
             <div className="btn-wrapper add">
                 <svg className="icon-loader-check" x="0px" y="0px" width="471.197px" height="471.197px" viewBox="0 0 510 510" overflow="inherit" preserveAspectRatio="xMidYMid meet">
                     <g id="loader">
@@ -19,8 +21,11 @@ export const Loader = ({ status, isCheck}: Props) => {
                 </svg>
                 <span>Salvo com sucesso!</span>
             </div>
+        } 
+        {loadingFinish && isError &&
+            <C.MessageError>Ocorreu um erro, tente novamente!</C.MessageError>
         }
-        {!isCheck &&
+        {!loadingFinish &&
             <div className="spinner" hidden>
                 <span className="visually-hidden"></span>
             </div>

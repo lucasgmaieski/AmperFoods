@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Container = styled.div<{status: string}>`
+export const Container = styled.div<{status: string, dark: string}>`
     /* position: absolute;
     top: 50%;
     left: 50%;
@@ -24,7 +24,7 @@ export const Container = styled.div<{status: string}>`
       border-radius: 50%;
       -webkit-animation: .75s linear infinite spinner-border;
       animation: .35s linear infinite spinner-border;
-      color: #fff;
+      color: ${props=>props.dark === 'true' ? '#E3531a' : '#fff'};;
     }
     @keyframes spinner-border {
       to { transform: rotate(360deg) }
@@ -155,12 +155,20 @@ export const Container = styled.div<{status: string}>`
 `;
 
 export const ModalBody = styled.div`
-    /* width: 300px;
-    height: 300px; */
     background-color: #fff;
     border-radius: 20px;
     box-shadow: 0 0 50px #000;
     max-width: 100vw;
     max-height: 95vh;
     overflow: auto;
+`;
+
+export const MessageError = styled.p`
+    background-color: #fbe4e4;
+    color: red;
+    border: 1px solid #ff000040;
+    font-size: .9rem;
+    padding: 8px 10px;
+    border-radius: 10px;
+    width: fit-content;
 `;

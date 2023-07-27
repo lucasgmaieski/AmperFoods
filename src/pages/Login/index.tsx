@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ErrorInput } from '../../components/ErrorInput';
+import { Loader } from '../../components/Loader';
 
 const schema = z.object({
     email: z.string().email({message: 'Endereço de email inválido'}),
@@ -24,13 +25,18 @@ type FormProps = z.infer<typeof schema>;
 export const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [emailInput, setEmailInput] = useState('');
-    const [passwordInput, setPasswordInput] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [loadingFinish, setLoadingFinish] = useState(false);
+    const [error, setError] = useState(false);
+
     const name = useAppSelector(state => state.persistedReducer.user.name);
 
     const { handleSubmit, register, setValue, formState: { errors} } = useForm<FormProps>({mode: 'all', reValidateMode: 'onChange', resolver: zodResolver(schema)});
     const handleForm = async (data: FormProps) => {
         try {
+            setLoadingFinish(false);
+            setError(false);
+            setLoading(true);
             const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
             const user = userCredential.user;
             if(user) {
@@ -95,98 +101,25 @@ export const Login = () => {
                 // Ocorreu um erro ao buscar os pedidos
                 console.error(error);
                 }
-                navigate('/');
+                setLoadingFinish(true);
+                setTimeout(() => {
+                    setLoading(false);
+                    navigate('/');
+                }, 2000);
             }
         } catch (error) {
             console.error(error);
+            setLoadingFinish(true);
+            setError(true);
+            console.log('deu erro: ' + error);
+            // setTimeout(() => {
+            //     setLoading(false);
+            // }, 2000);
         }
     }
-
-
-    const handleSignIn = async (e: ChangeEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, emailInput, passwordInput);
-            const user = userCredential.user;
-            if(user) {
-                console.log("usuario logado com sucesso: "+ user.email);
-                
-                // const user = auth.currentUser;
-                const tokenUser = await user.getIdToken();
-                console.log('tokenUser1: '+tokenUser);
-                
-                const uid = user.uid;
-                // get orders in db and save localStorage
-                try {
-                const userDocRef = doc(db, 'users', uid);
-                const pedidosSubcollectionRef = collection(userDocRef, 'orders');
-                const pedidosQuery = query(pedidosSubcollectionRef);
-                const pedidosSnapshot = await getDocs(pedidosQuery);
-
-                const pedidos: any = pedidosSnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-                pedidos.forEach((pedido:any) => {
-                    dispatch( saveOrder({
-                        date: pedido.date,
-                        status: 1,
-                        address: pedido.address,
-                        discount: pedido.discount,
-                        delivery: pedido.delivery,
-                        amount: pedido.amount,
-                        totalPayable: pedido.totalPayable,
-                        products: pedido.products
-                    }));
-                });
-                } catch (error) {
-                // Ocorreu um erro ao buscar os pedidos
-                console.error(error);
-                }
-                type infoUserType = {
-                name: string,
-                email: string,
-                phone: string,
-                address: string,
-                }
-                // get data user in db and save in localStorage
-                try {
-                const userDocRef = doc(db, 'users', uid);
-                const infoUser: any = await getDoc(userDocRef);
-                
-                if(infoUser.exists()) {
-                    console.log("info user: ");
-                    console.log(infoUser.data());
-                    const userToken = await user.getIdToken();
-                    dispatch(setToken({ token: userToken}));
-                    dispatch( setInfo({
-                    name: infoUser.data().name,
-                    email: infoUser.data().email,
-                    phone: infoUser.data().phone,
-                    address: infoUser.data().address
-                    }));
-                }
-                } catch (error) {
-                // Ocorreu um erro ao buscar os pedidos
-                console.error(error);
-                }
-                navigate('/');
-            }
-
-        } catch (error) {
-            console.error(error);
-        }
-    }
-   
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if(e.target.id == 'email') {
-            setEmailInput(e.target.value);
-        }
-        if(e.target.id == 'password') {
-            setPasswordInput(e.target.value);
-        }
-    }
+    const handleInputChange = () => {
+        setLoading(false);
+    };
     
     return (
         <C.Container>
@@ -196,14 +129,14 @@ export const Login = () => {
             <C.Titulo>Faça Login para comprar</C.Titulo>
                 <C.Label>
                     Email:
-                    <C.Input type="text" id="email"  {...register('email')} />
+                    <C.Input type="text" id="email"  {...register('email')} onChange={handleInputChange}/>
                     {errors.email && (
                         <ErrorInput message={errors.email?.message} />
                     )}
                 </C.Label>
                 <C.Label>
                     Senha:
-                    <C.Input type="text" id="password"  {...register('password')} />
+                    <C.Input type="text" id="password"  {...register('password')} onChange={handleInputChange}/>
                     {errors.password && (
                         <ErrorInput message={errors.password?.message} />
                     )}
@@ -212,6 +145,9 @@ export const Login = () => {
                 <Link to={'/#'} >Esqueceu sua senha?</Link>
                     
                 <C.Submit>Entrar</C.Submit>
+                {loading && 
+                    <Loader status={loading} loadingFinish={loadingFinish} isError={error} dark={true}/>
+                }
                 <p>Você não tem uma conta?</p>
                 <Link to={'/register'} >Crie a sua conta aqui</Link>
             </C.FormArea>
