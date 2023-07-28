@@ -22,4 +22,5 @@ export const ModalBody = styled.div`
     max-width: 100vw;
     max-height: 95vh;
     overflow: auto;
+    margin: 0 20px;
 `;
