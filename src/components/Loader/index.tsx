@@ -6,8 +6,9 @@ type Props = {
     loadingFinish: boolean;
     isError: boolean;
     dark: boolean;
+    errorMessage?: string;
 }
-export const Loader = ({ status, loadingFinish, isError, dark}: Props) => {
+export const Loader = ({ status, loadingFinish, isError, errorMessage, dark}: Props) => {
     return (
         <C.Container status={status.toString()} dark={dark?.toString()}>
         {loadingFinish && !isError &&
@@ -23,7 +24,7 @@ export const Loader = ({ status, loadingFinish, isError, dark}: Props) => {
             </div>
         } 
         {loadingFinish && isError &&
-            <C.MessageError>Ocorreu um erro, tente novamente!</C.MessageError>
+            <C.MessageError>{errorMessage == '' ? 'Ocorreu um erro, tente novamente!' : errorMessage}</C.MessageError>
         }
         {!loadingFinish &&
             <div className="spinner" hidden>
