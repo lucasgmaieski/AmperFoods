@@ -9,7 +9,7 @@ export const Header = () => {
 
     return (
         <C.Container>
-            <div><C.Logo src="/assets/logo-amperfoods-orange-2.png" /></div>
+            <Link to={'/'}><C.Logo src="/assets/logo-amperfoods-orange-2.png" /></Link>
             <C.SocialArea>
                 <Link to="" title='AmperFoods no Instagram'>
                     <FiInstagram />

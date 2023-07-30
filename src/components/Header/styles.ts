@@ -12,10 +12,16 @@ export const Container = styled.div`
     div {
         max-width: 240px;
     }
+    @media (max-width: 500px) {
+        flex-direction: column;
+        justify-content: center;
+    }
 `;
 export const Logo = styled.img`
-    max-width: 100%;
     height: auto;
+    max-width: 260px;
+    min-width: 210px;
+    width: 100%;
     margin: auto;
 `;
 export const SocialArea = styled.div`

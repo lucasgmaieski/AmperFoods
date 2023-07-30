@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import * as C from './styles';
 import React, { useState, ChangeEvent } from 'react';
 
@@ -23,7 +24,7 @@ export const HeaderHome = ({search, onSearch}: Props) => {
 
     return (
         <C.Container>
-            <div><C.Logo src="/assets/logo-amperfoods-orange-2.png" /></div>
+            <Link to={'/'}><C.Logo src="/assets/logo-amperfoods-orange-2.png" /></Link>
             <C.SearchInput 
                 type="text" 
                 placeholder="Digite um Produto"
