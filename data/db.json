@@ -3,80 +3,89 @@
     {
       "id": 1,
       "id_cat": 1,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/bolo-de-morango.png",
+      "calories": 1200,
       "name": "Bolo de Morango",
       "points": 0,
-      "price": 5
+      "price": 60
     },
     {
       "id": 2,
       "id_cat": 1,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/bolo-de-chocolate.png",
+      "calories": 1200,
       "name": "Bolo de Chocolate",
       "points": 0,
-      "price": 5
+      "price": 80
     },
     {
       "id": 3,
       "id_cat": 1,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/bolo-de-baunilha.png",
+      "calories": 1200,
       "name": "Bolo de Baunilha",
       "points": 0,
-      "price": 5
+      "price": 50
     },
     {
       "id": 4,
       "id_cat": 1,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/bolo-de-banana.png",
+      "calories": 1200,
       "name": "Bolo de Banana",
       "points": 0,
-      "price": 5
+      "price": 50
     },
     {
       "id": 5,
       "id_cat": 1,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/bolo-de-fuba.png",
+      "calories": 1200,
       "name": "Bolo de Fubá",
       "points": 0,
-      "price": 5
+      "price": 40
     },
     {
       "id": 6,
       "id_cat": 2,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/torta-de-morango.png",
+      "calories": 1100,
       "name": "Torta de Morango",
       "points": 0,
-      "price": 5
+      "price": 30
     },
     {
       "id": 7,
       "id_cat": 2,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/torta-de-brigadeiro.PNG",
+      "calories": 1100,
       "name": "Torta de Brigadeiro",
       "points": 0,
-      "price": 5
+      "price": 50
     },
     {
       "id": 8,
       "id_cat": 2,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/torta-de-limao.png",
+      "calories": 1100,
       "name": "Torta de Limão",
       "points": 0,
-      "price": 5
+      "price": 30
+    },
+    {
+      "id": 8,
+      "id_cat": 2,
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/torta-de-maracuja.PNG",
+      "calories": 1100,
+      "name": "Torta de Maracujá",
+      "points": 0,
+      "price": 30
     },
     {
       "id": 9,
       "id_cat": 3,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/cookies-de-amendoim.png",
+      "calories": 200,
       "name": "Cookie de Amendoim",
       "points": 0,
       "price": 5
@@ -84,17 +93,17 @@
     {
       "id": 10,
       "id_cat": 3,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/cookie-de-chocolate.PNG",
+      "calories": 200,
       "name": "Cookie de Chocolate",
       "points": 0,
-      "price": 5
+      "price": 6
     },
     {
       "id": 11,
       "id_cat": 3,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/cookie-de-castanhas.png",
+      "calories": 200,
       "name": "Cookie de Castanhas",
       "points": 0,
       "price": 5
@@ -102,17 +111,17 @@
     {
       "id": 12,
       "id_cat": 3,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/cookie-de-chocolate-branco.PNG",
+      "calories": 200,
       "name": "Cookie de Chocolate Branco",
       "points": 0,
-      "price": 5
+      "price": 6
     },
     {
       "id": 13,
       "id_cat": 4,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/coxinha-de-frango.png",
+      "calories": 350,
       "name": "Coxinha de Frango",
       "points": 0,
       "price": 5
@@ -120,8 +129,8 @@
     {
       "id": 14,
       "id_cat": 4,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/pastel-de-frango.PNG",
+      "calories": 350,
       "name": "Pastel de Frango",
       "points": 0,
       "price": 5
@@ -129,38 +138,38 @@
     {
       "id": 15,
       "id_cat": 4,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/sandwiche-de-mortadela.png",
+      "calories": 250,
       "name": "Sandwiche de Mortadela",
       "points": 0,
-      "price": 5
+      "price": 8
     },
     {
       "id": 16,
       "id_cat": 4,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/enroladinho-de-salsicha.png",
+      "calories": 50,
       "name": "Enroladinho de Salsicha",
       "points": 0,
-      "price": 5
+      "price": 2
     },
     {
       "id": 17,
       "id_cat": 4,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/mini-pizza.PNG",
+      "calories": "200",
       "name": "Mini Pizza",
       "points": 0,
-      "price": 5
+      "price": 7
     },
     {
       "id": 18,
       "id_cat": 4,
-      "image": "sadf",
-      "ingredients": "Farinha, Açucar, leite",
-      "name": "Sfirra",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/esfirra.PNG",
+      "calories": 200,
+      "name": "Esfirra",
       "points": 0,
-      "price": 5
+      "price": 7
     }
     
   ],
@@ -168,22 +177,22 @@
     {
       "id": 1,
       "name": "Bolos",
-      "image": "url"
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/categories/cake.png"
     },
     {
       "id": 2,
       "name": "Tortas",
-      "image": "url"
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/categories/pie.png"
     },
     {
       "id": 3,
       "name": "Cookies",
-      "image": "url"
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/categories/cookies.png"
     },
     {
       "id": 4,
       "name": "Salgados",
-      "image": "url"
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/categories/sandwich.png"
     }
   ]
 }
