@@ -1,5 +1,4 @@
 import { OrderItemType } from '../../types/OrderItem';
-import { ProdItem } from '../../types/ProdItem';
 import * as C from './styles';
 
 type Props ={
@@ -7,13 +6,8 @@ type Props ={
 }
 
 export const OrderOpen = ({data}: Props) => {
-    
-    const handleOpenOrder = () => {
-        
-    }
-
     return (
-        <C.Container onClick={handleOpenOrder}>
+        <C.Container>
             {data && 
             <>
                 <C.TimeLineArea>
@@ -70,7 +64,6 @@ export const OrderOpen = ({data}: Props) => {
                             <span>R$ {(data.amount + data.delivery - (data.discount*data.amount*0.01)).toFixed(2)}</span>
                         </C.ValuesItem>
                     </C.ValuesArea>
-                
                 </C.DetailsArea>
             </>
             }

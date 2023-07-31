@@ -9,16 +9,12 @@ type Props ={
 }
 
 export const OrderItem = ({data, onClick, index, componenteBRef}: Props) => {
-
     const handleOpenOrder = () => {
-        
         onClick(index);
         componenteBRef.current.scrollIntoView({
             behavior: 'smooth',
           });
     }
-    
-
     return (
         <C.Container onClick={handleOpenOrder}>
             <C.UpperArea>

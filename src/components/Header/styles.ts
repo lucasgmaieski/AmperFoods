@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 
-
 export const Container = styled.div`
     background-color: #E35319;
     border-radius: 10px;
@@ -46,5 +45,4 @@ export const SocialArea = styled.div`
             
         }
     }
-    
 `;

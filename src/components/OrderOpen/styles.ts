@@ -22,7 +22,6 @@ export const TimeLineArea = styled.div`
     width: 100%;
     margin: 10px 0 20px;
 `;
-
 export const TimeLine = styled.div`
     display: flex;
     align-items: center;
@@ -40,7 +39,6 @@ export const Line = styled.div`
     height: 2px;
     background-color: #E35319;
 `;
-
 export const TimeLineDescription = styled.div`
     width: 100%;
     display: flex;
@@ -87,7 +85,6 @@ export const ProductPrice = styled.div`
 export const InfosArea = styled.div`
    flex: 1;
 `;
-
 export const ValuesArea = styled.div` 
     margin: 10px 0 14px;
     flex: 1;
@@ -131,7 +128,6 @@ export const LowerArea = styled.div`
     align-items: center;
     width: 100%;
 `;
-
 export const Amount = styled.div`
 
 `;

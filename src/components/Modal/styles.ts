@@ -12,10 +12,7 @@ export const Container = styled.div<{status: string}>`
     justify-content: center;
     align-items: center;
 `;
-
 export const ModalBody = styled.div`
-    /* width: 300px;
-    height: 300px; */
     background-color: #fff;
     border-radius: 20px;
     box-shadow: 0 0 50px #000;

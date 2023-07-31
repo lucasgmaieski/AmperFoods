@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { ProductButton } from "../ModalCheckout/styles";
 
 export const CartArea = styled.div`
     background-color: #E35319;
@@ -8,7 +9,6 @@ export const CartArea = styled.div`
     bottom: 0;
     right: clamp(2vw, 4vw, 30px);
 `;
-
 export const CartHeader = styled.div`
     width: 290px;
     height: 50px;
@@ -19,26 +19,22 @@ export const CartHeader = styled.div`
         width: clamp(260px, 90vw, 290px);
     }
 `;
-
 export const CartIcon = styled.img`
     width: 23px;
     height: auto;
     margin-left: 10px;
     margin-right: 10px;
 `;
-
 export const CartText = styled.div`
     color: #fff;
     font-size: 16px;
     flex: 1;
 `;
-
 export const CartBody = styled.div<{show: string}>`
     display: ${props=>props.show === 'true' ? 'block' : 'none'};
     color: #fff;
     margin: 10px;
 `;
-
 export const ProductsArea = styled.div``;
 export const ProductItem = styled.div`
     display: flex;
@@ -74,7 +70,6 @@ export const ProductQtText = styled.div`
     font-weight: bold;
     margin: 0px 5px;
 `;
-
 export const AddressArea = styled.div` 
     margin: 15px 0 10px;
 `;
@@ -129,10 +124,25 @@ export const ButtonCheckout = styled.button`
     border: none;
     padding: 7px;
     color: #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     border-radius:12px;
     cursor: pointer;
+    transition: all ease .3s;
     &:disabled {
         filter: grayscale(.4);
         cursor: not-allowed;
     }
+    &:hover {
+        background-color: #f17a22;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.36);
+    }
+`;
+export const LoginButton = styled(ProductButton)`
+    margin-top: 15px;
+    margin-left: 0;
+    font-size: 20px;
+`;
+export const ContainerLoader = styled.div`
+    padding: 20px;
+    text-align: center;
 `;

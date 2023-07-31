@@ -1,20 +1,24 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import {ChangeEvent, useEffect, useState} from 'react';
 import * as C from './styles';
 import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import { useDispatch } from 'react-redux';
 import { changeProduct, clearCart } from '../../redux/reducers/CartReducer';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { formattedCurrentDate } from '../../helpers/dataHelper';
 import { saveOrder } from '../../redux/reducers/OrdersReducer';
 import { Modal } from '../Modal';
 import { ModalCheckout } from '../ModalCheckout';
-import { addDoc, collection, doc, onSnapshot } from 'firebase/firestore';
+import { addDoc, collection, doc} from 'firebase/firestore';
 import { auth, db } from '../../services/firebaseConfig';
-import { setInfo, setToken } from '../../redux/reducers/UserReducer';
+import { Loader } from '../Loader';
 
 export const Cart = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
+    const [loadingFinish, setLoadingFinish] = useState(false);
+    const [error, setError] = useState(false);
+    const [message, setMessage] = useState('');
     const products = useAppSelector(state => state.persistedReducer.cart.products);
     const userInfos = useAppSelector(state => state.persistedReducer.user);
     const [coupon, setCoupon] = useState('AMPERFOODS10');
@@ -22,8 +26,7 @@ export const Cart = () => {
     const delivery = 5;
     const discount = 10;
     const totalPayable = amount + delivery - (discount*amount*0.01);
-
-    const [show, setShow] = useState(false); //-------
+    const [show, setShow] = useState(false);
 
     const [modalStatus, setModalStatus] = useState(false);
     const [confirmOrderStatus, setConfirmOrderStatus] = useState(false);
@@ -33,11 +36,6 @@ export const Cart = () => {
         setAmount(products.reduce((accumulator, product) => {
             return accumulator + (product.qt * product.price);
         }, 0));
-        
-        // console.log(amount);
-        const dataAtual = new Date();
-        // console.log(dataAtual);
-        // console.log(formattedCurrentDate());
     }, [products]);
 
     useEffect(()=>{
@@ -72,40 +70,60 @@ export const Cart = () => {
                         totalPayable: totalPayable,
                         products: products
                     });
-                    console.log("pedido adicionado com sucesso ")
-                    // Pedido adicionado com sucesso à subcoleção "pedidos" dentro do documento do usuário
+                    console.log("pedido adicionado com sucesso ");
+                    // Pedido adicionado com sucesso à subcoleção "orders" dentro do documento do usuário
+                    dispatch( clearCart({}))
+                    setLoading(true);
+                    setLoadingFinish(true);
+                    setMessage('Pedido Confirmado!');
+                    setTimeout(() => {
+                        setLoading(false);
+                        navigate('/orders');
+                        setModalStatus(false);
+                        setShow(false);
+                    }, 2500);
                   } catch (error) {
-                    // Ocorreu um erro ao adicionar o pedido
                     console.error(error);
+                    setLoading(true);
+                    setLoadingFinish(true);
+                    setError(true);
+                    setMessage('Não foi possível confirmar seu pedido, tente novamente!');
+                    setTimeout(() => {
+                        setLoading(false);
+                        setLoadingFinish(false);
+                        setError(false);
+                        setMessage('');
+                    }, 2500);
                   }
                 }
             };
             adicionarPedido();
 
-            dispatch( clearCart({}))
-            setModalStatus(false);
-            setShow(false);
-            navigate('/orders');
         } else if (confirmOrderStatus && !userInfos.token) {
-            setModalStatus(false);
-            setShow(false);
-            console.log('você não esta logado para fazer pedido. Faça login');
-            navigate('/login');
-        } else {
-            
-        }
+            setLoading(true);
+            setMessage('Você ainda não esta logado. Faça login para confirmar seu pedido!');
+            setTimeout(() => {
+                setLoadingFinish(true);
+                setError(true);
+            }, 800);
+        } else {}
 
         setConfirmOrderStatus(false);
     }, [confirmOrderStatus]);
+
+    useEffect(()=> {
+        setLoading(false);
+        setLoadingFinish(false);
+        setError(false);
+        setMessage('');
+    }, [modalStatus]);
 
     const handleCartClick = () => {
         setShow(!show);
     };
 
     const handleProductChange = (key: number, type: string) => {
-        dispatch( changeProduct({
-            key, type
-        }));
+        dispatch( changeProduct({ key, type }));
     };
 
     const handleCouponInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -114,6 +132,10 @@ export const Cart = () => {
 
     const handleCheckoutClick = () => {
         setModalStatus(true);
+    }
+    const handleGoLogin = () => {
+        setModalStatus(false);
+        setShow(false);
     }
     return (
         <C.CartArea>
@@ -181,7 +203,17 @@ export const Cart = () => {
                 <C.ButtonCheckout onClick={handleCheckoutClick} disabled={products.length === 0}>Finalizar Compra</C.ButtonCheckout>
             </C.CartBody>
             <Modal status={modalStatus} setStatus={setModalStatus}>
-                <ModalCheckout totalPayable={totalPayable} setModalStatus={setModalStatus} setConfirmOrderStatus={setConfirmOrderStatus}/>
+                {!loading && 
+                    <ModalCheckout totalPayable={totalPayable} setModalStatus={setModalStatus} setConfirmOrderStatus={setConfirmOrderStatus}/>
+                }
+                {loading &&
+                    <C.ContainerLoader>
+                        <Loader status={loading} loadingFinish={loadingFinish} isError={error} message={message} dark={true}/>
+                        {!userInfos.token && loadingFinish &&
+                            <Link to={'/login'} onClick={handleGoLogin}><C.LoginButton> Fazer Login</C.LoginButton></Link>
+                        }
+                    </C.ContainerLoader>
+                }
             </Modal>
         </C.CartArea>
     )

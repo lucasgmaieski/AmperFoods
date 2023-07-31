@@ -13,7 +13,6 @@ export const Modal = ({children, status, setStatus}: Props) => {
           setStatus(false);
         }
     }
-
     return (
         <C.Container 
             className="modalBg"

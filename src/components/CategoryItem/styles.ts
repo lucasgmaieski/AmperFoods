@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 
-
 export const Container = styled.div<{active: number, ident: number}>`
     max-width: 80px;
     aspect-ratio: 1/1;

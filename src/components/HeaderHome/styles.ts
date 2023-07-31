@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 
-
 export const Container = styled.div`
     background-color: #E35319;
     border-radius: 10px;
@@ -23,7 +22,6 @@ export const Logo = styled.img`
     min-width: 210px;
     width: 100%;
 `;
-
 export const SearchInput = styled.input<{active: string}>`
     border: 0;
     border-radius: 25px;
@@ -39,7 +37,10 @@ export const SearchInput = styled.input<{active: string}>`
     padding-left: 50px;
     transition: all ease .2s;
     cursor: pointer;
-
+    @media (max-width: 500px) {
+        width: ${props=> props.active == 'true' ? '100%' : '0px'};
+        max-width: 250px;
+    }
     &:focus {
         cursor: text;
     }

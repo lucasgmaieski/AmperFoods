@@ -32,8 +32,6 @@ export const ModalProduct = ({data, setStatus}: Props) => {
     }
 
     const handleAddToCart = () => {
-        //juntar as informações
-        //mandar isso pro reducer
         dispatch(addProduct({data, qt}
         ));
 
@@ -46,7 +44,7 @@ export const ModalProduct = ({data, setStatus}: Props) => {
                 <C.ProductInfoArea>
                     <C.ProductDetails >
                         <C.ProductName>{data?.name}</C.ProductName>
-                        <C.ProductIngredients>{data?.ingredients}</C.ProductIngredients>
+                        <C.ProductCalories>{data?.calories}</C.ProductCalories>
                     </C.ProductDetails>
                     <C.ProductQuantityArea>
                         <C.ProductQuantity>

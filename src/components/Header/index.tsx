@@ -1,12 +1,8 @@
 import { FiFacebook, FiInstagram } from 'react-icons/fi';
 import * as C from './styles';
-import React, { useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 
-
 export const Header = () => {
-    
-
     return (
         <C.Container>
             <Link to={'/'}><C.Logo src="/assets/logo-amperfoods-orange-2.png" /></Link>

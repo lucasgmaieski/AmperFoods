@@ -17,7 +17,11 @@ export const Container = styled.div`
     }
 `;
 export const ProductPhotoArea= styled.div`
-    width: 100px;
+    width: 130px;
+    @media (max-width: 500px) {
+        max-width: 190px;
+        width: 45%;
+    }
 `;
 export const ProductInfoArea= styled.div`
     flex: 1;
@@ -34,11 +38,14 @@ export const ProductPhoto= styled.img`
 export const ProductName= styled.div`
     font-size: 20px;
     font-weight: bold;
+    @media (max-width: 500px) {
+        font-size: 17px;
+    }
 `;
 export const ProductPrice= styled.div`
     font-size: 14px;
 `;
-export const ProductIngredients= styled.div`
+export const ProductCalories= styled.div`
     font-size: 11px;
 `;
 export const ProductButton= styled.img`

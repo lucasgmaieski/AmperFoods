@@ -1,14 +1,13 @@
 import * as C from './styles';
-import React, { MouseEvent, ReactNode } from 'react';
 
 type Props = {
     status: boolean;
     loadingFinish: boolean;
     isError: boolean;
     dark: boolean;
-    errorMessage?: string;
+    message?: string;
 }
-export const Loader = ({ status, loadingFinish, isError, errorMessage, dark}: Props) => {
+export const Loader = ({ status, loadingFinish, isError, message, dark}: Props) => {
     return (
         <C.Container status={status.toString()} dark={dark?.toString()}>
         {loadingFinish && !isError &&
@@ -20,19 +19,17 @@ export const Loader = ({ status, loadingFinish, isError, errorMessage, dark}: Pr
                     237.599,332.099 300.599,269.099 190.599,159.099 "/>
                     </g>
                 </svg>
-                <span>Salvo com sucesso!</span>
+                <span>{message == '' ? 'Salvo com sucesso!' : message}</span>
             </div>
         } 
         {loadingFinish && isError &&
-            <C.MessageError>{errorMessage == '' ? 'Ocorreu um erro, tente novamente!' : errorMessage}</C.MessageError>
+            <C.MessageError>{message == '' ? 'Ocorreu um erro, tente novamente!' : message}</C.MessageError>
         }
         {!loadingFinish &&
             <div className="spinner" hidden>
                 <span className="visually-hidden"></span>
             </div>
         }
-
-
         </C.Container>
     )
 } 

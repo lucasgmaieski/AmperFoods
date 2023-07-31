@@ -10,8 +10,8 @@ export const Container = styled.div`
     align-items: center;
     color: #E35319;
     cursor: pointer;
+    outline: 4px solid transparent;
 
-    /*Barra pela direita*/
     position: relative;
     transition: all ease .4s;
 
@@ -27,12 +27,8 @@ export const UpperArea = styled.div`
     width: 100%;
     margin-bottom: 10px;
 `;
-export const Date = styled.div`
-
-`;
-export const Status = styled.div`
-
-`;
+export const Date = styled.div``;
+export const Status = styled.div``;
 export const LowerArea = styled.div`
     display: flex;
     justify-content: space-between;

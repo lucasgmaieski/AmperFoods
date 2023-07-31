@@ -20,7 +20,7 @@ export const ProductItem = ({data, onClick}: Props) => {
             <C.ProductInfoArea>
                 <C.ProductName>{data.name}</C.ProductName>
                 <C.ProductPrice>R$ {data.price}</C.ProductPrice>
-                <C.ProductIngredients>{data.ingredients}</C.ProductIngredients>
+                <C.ProductCalories>{data.calories} cal</C.ProductCalories>
             </C.ProductInfoArea>
 
             <C.ProductButtonArea>
