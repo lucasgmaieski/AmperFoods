@@ -7,6 +7,5 @@ export const formattedCurrentDate = () => {
     const minutos = String(dataAtual.getMinutes()).padStart(2, "0");
     
     const dataFormatada = `${dia}/${mes}/${ano} ${hora}:${minutos}`;
-    console.log(dataFormatada);
     return dataFormatada;
 }

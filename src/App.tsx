@@ -4,7 +4,6 @@ import { useAppSelector } from './redux/hooks/useAppSelector';
 import {Tooltip} from 'react-tooltip';
 import { useEffect } from 'react';
 import HomeScreen from './pages/HomeScreen';
-import Tela2Screen from './pages/Tela2Screen';
 import { MenuItem } from './components/MenuItem';
 import { PrivateRoute } from './components/PrivateRoute';
 import { Cart } from './components/Cart';
@@ -14,12 +13,6 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 
 export default () => {
-    const name = useAppSelector(state => state.persistedReducer.user.name);
-
-    useEffect(()=> {
-        
-    }, []);
-
     return (
         <BrowserRouter>
             <C.Container>
@@ -33,7 +26,6 @@ export default () => {
                         <Route path="/" element={<HomeScreen />} />
                         <Route path="/orders" element={<PrivateRoute><OrdersScreen /></PrivateRoute>} />
                         <Route path="/profile" element={<PrivateRoute><ProfileScreen /></PrivateRoute>} />
-                        <Route path="/tela2/:nome" element={<Tela2Screen />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/login" element={<Login />} />
                     </Routes>

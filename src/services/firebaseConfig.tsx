@@ -3,12 +3,12 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyASXsHdzm5PGxjEgUvw91iX2CwX7AcPFXI",
-  authDomain: "amperfoods-auth.firebaseapp.com",
-  projectId: "amperfoods-auth",
-  storageBucket: "amperfoods-auth.appspot.com",
-  messagingSenderId: "501239731696",
-  appId: "1:501239731696:web:fd603a0ee929d320c8f935"
+  apiKey: import.meta.env.VITE_APP_FIREBASE_APIKEY,
+  authDomain: import.meta.env.VITE_APP_FIREBASE_AUTHDOMAIN,
+  projectId: import.meta.env.VITE_APP_FIREBASE_PROJECTID,
+  storageBucket: import.meta.env.VITE_APP_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.VITE_APP_FIREBASE_MESSAGINGSENDERID,
+  appId: import.meta.env.VITE_APP_FIREBASE_APPID,
 };
 
 // Initialize Firebase

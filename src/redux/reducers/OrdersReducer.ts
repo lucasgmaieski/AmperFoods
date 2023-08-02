@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ProductsCart } from '../../types/ProductsCart';
 import { OrderItemType } from '../../types/OrderItem';
 
 type InitialStateOrders = {
