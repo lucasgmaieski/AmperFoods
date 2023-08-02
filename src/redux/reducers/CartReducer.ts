@@ -28,14 +28,14 @@ export const slice = createSlice({
                 if(action.payload.type === '-') {
                     state.products[action.payload.key].qt--; 
                     if(state.products[action.payload.key].qt <= 0) {
-                        state.products = state.products.filter((item, index)=>index != action.payload.key)
+                        state.products = state.products.filter((item, index)=>index != action.payload.key && item)
                     }
                 } else {
                     state.products[action.payload.key].qt++;
                 }
             }
         },
-        clearCart: (state: InitialStateProducts, action) => {
+        clearCart: (state: InitialStateProducts) => {
             state.products = [];
         }
     }

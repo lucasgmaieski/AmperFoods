@@ -22,7 +22,7 @@ export const slice = createSlice({
                 products: action.payload.products
             });
         },
-        clearOrders: (state: InitialStateOrders, action) => {
+        clearOrders: (state: InitialStateOrders) => {
             state.orders = [];
         }
     }

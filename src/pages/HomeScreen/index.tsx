@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import { useNavigate } from "react-router-dom";
+import {useEffect, useState} from 'react';
 import * as C from './styled';
 import { api } from '../../api';
 import { CategoryItem } from '../../components/CategoryItem';
@@ -129,7 +128,7 @@ export default () => {
                             current={index + 1}
                             onClick={()=>setActivePage(index + 1)}
                         >
-                            {index + 1}
+                            {index + 1 + item}
                         </C.ProductPaginationItem>
                     ))}
                 </C.ProductPaginationArea>

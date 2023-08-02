@@ -1,10 +1,8 @@
-import { ChangeEvent, useState } from 'react';
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState } from 'react';
+import { Link, useNavigate} from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import * as C from './styled';
-import { setInfo, setName, setToken } from '../../redux/reducers/UserReducer';
-import { persistor } from '../../redux/store';
+import { setInfo, setToken } from '../../redux/reducers/UserReducer';
 
 import { auth, db } from '../../services/firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -40,7 +38,7 @@ export const Register = () => {
     const [error, setError] = useState(false);
     const [message, setMessage] = useState('');
     
-    const { handleSubmit, register, setValue, formState: { errors} } = useForm<FormProps>({mode: 'all', reValidateMode: 'onChange', resolver: zodResolver(schema)});
+    const { handleSubmit, register, formState: { errors} } = useForm<FormProps>({mode: 'all', reValidateMode: 'onChange', resolver: zodResolver(schema)});
     const handleForm = async (data: FormProps) => {
         try {
             setLoadingFinish(false);

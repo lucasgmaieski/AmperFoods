@@ -1,8 +1,6 @@
 import * as C from './App.styled';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useAppSelector } from './redux/hooks/useAppSelector';
 import {Tooltip} from 'react-tooltip';
-import { useEffect } from 'react';
 import HomeScreen from './pages/HomeScreen';
 import { MenuItem } from './components/MenuItem';
 import { PrivateRoute } from './components/PrivateRoute';

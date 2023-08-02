@@ -1,7 +1,4 @@
-import { useState } from 'react';
 import * as C from './styles';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../redux/hooks/useAppSelector';
 
 type Props = {
     setModalStatus: React.Dispatch<React.SetStateAction<boolean>>

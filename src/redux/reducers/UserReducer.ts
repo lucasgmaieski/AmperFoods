@@ -22,7 +22,7 @@ export const slice = createSlice({
             state.address = action.payload.address;
             state.phone = action.payload.phone;
         },
-        clearInfos: (state, action) => {
+        clearInfos: (state) => {
             state.token = '';
             state.name = '';
             state.email = '';
