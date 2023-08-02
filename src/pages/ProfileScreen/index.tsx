@@ -127,9 +127,9 @@ export const ProfileScreen = () => {
 
     const handleLogout = () => {
         signOut(auth).then(()=> {
-            dispatch( clearInfos({}));
-            dispatch( clearCart({}));
-            dispatch( clearOrders({}));
+            dispatch( clearInfos());
+            dispatch( clearCart());
+            dispatch( clearOrders());
         }).catch((error)=> {
           console.error(error);
         })   
@@ -145,9 +145,9 @@ export const ProfileScreen = () => {
                 console.error(error);
             }
             deleteUser(user).then(() => {
-                dispatch( clearInfos({}));
-                dispatch( clearCart({}));
-                dispatch( clearOrders({}));
+                dispatch( clearInfos());
+                dispatch( clearCart());
+                dispatch( clearOrders());
                 setConfirmDeleteAccount(false);
                 setModalStatus(false);
                 navigate('/login');

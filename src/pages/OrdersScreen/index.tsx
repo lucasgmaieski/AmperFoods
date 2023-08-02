@@ -41,7 +41,7 @@ export const OrdersScreen = () => {
               } catch (error) {
                 console.error(error);
               }
-              dispatch(clearOrders({}));
+              dispatch(clearOrders());
         } else {
             console.log('Não existe usuário');
         }
