@@ -4,13 +4,12 @@ export const Container = styled.div`
     width: 100%;
     margin: 15px;
 `;
-
 export const Titulo = styled.div`
     font-size: 20px;
     color: #000;
     margin: 20px 0;
 `;
-export const FormArea = styled.form`
+export const FormArea = styled.div`
     position: relative;
     background-color: #fff;
     padding: 20px;

@@ -14,12 +14,12 @@ import { HeaderHome } from '../../components/HeaderHome';
 let searchTimer: NodeJS.Timeout | undefined = undefined;
 
 export default () => {
-    const navigate = useNavigate();
     const [headerSearch, setHeaderSerach] = useState('');
     const [categories, setCategories] = useState<CatItem[]>([]);
     const [products, setProducts] = useState<ProdItem[]>([]);
     const [totalPages, setTotalPages] = useState(0);
 
+    const [loadingPage, setLoadingPage] = useState(true);
     const [loading, setLoading] = useState(false);
     const [modalStatus, setModalStatus] = useState(false);
     const [modalData, setModalData] = useState<ProdItem | null>(null);
@@ -36,8 +36,6 @@ export default () => {
             setLoading(false);
             if(prods.data.length > 0) {
                 setProducts(prods.data);
-                console.log(prods.data);
-                // setTotalPages(prods.totalPages);
                 setActivePage(prods.currentPage);
             }
         }, 150);
@@ -59,6 +57,9 @@ export default () => {
             }
         };
         getCategories();
+        setTimeout(() => {
+            setLoadingPage(false);
+        }, 600);
     }, []);
 
     useEffect(()=>{
@@ -75,7 +76,7 @@ export default () => {
         <C.Container>
             <HeaderHome search={headerSearch} onSearch={setHeaderSerach}/>
 
-            {categories.length > 0 &&
+            {categories.length > 0 && !loadingPage &&
                 <C.CategoryArea>
                     <h3>Selecione uma categoria</h3>
                     <C.CategoryList>
@@ -98,7 +99,7 @@ export default () => {
                 </C.CategoryArea>
             }
 
-            {products.length > 0 && 
+            {products.length > 0 && !loadingPage && 
                 <C.ProductArea>
                     <C.ProductList>
                         {products.map((item, index)=>(
@@ -111,14 +112,15 @@ export default () => {
                     </C.ProductList>
                 </C.ProductArea>
             }
-            {products.length === 0 && !loading && 
+            {products.length === 0 && !loading && !loadingPage && 
                 <C.NoProducts>Nenhum produto encontrado!</C.NoProducts>
             }
-            {loading && 
-                <Loader status={true} isCheck={false} />
-            }
+            {loading && !loadingPage &&
+                <C.ContainerLoaderPage>
+                    <Loader status={true} loadingFinish={false} isError={false} message='' dark={false}/>
+                </C.ContainerLoaderPage>            }
 
-            {totalPages > 1 && !loading &&
+            {totalPages > 1 && !loading && !loadingPage &&
                 <C.ProductPaginationArea>
                     {Array(totalPages).fill(0).map((item, index)=>(
                         <C.ProductPaginationItem 
@@ -132,7 +134,11 @@ export default () => {
                     ))}
                 </C.ProductPaginationArea>
             }
-
+            {loadingPage &&
+                <C.ContainerLoaderPage>
+                    <Loader status={true} loadingFinish={false} isError={false} message='' dark={false}/>
+                </C.ContainerLoaderPage>
+            }
             <Modal status={modalStatus} setStatus={setModalStatus}>
                 <ModalProduct data={modalData} setStatus={setModalStatus}/>
             </Modal>

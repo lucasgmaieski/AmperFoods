@@ -18,6 +18,8 @@ import InputMask from "react-input-mask";
 import { Loader } from '../../components/Loader';
 import { userInfo } from 'os';
 import { ErrorInput } from '../../components/ErrorInput';
+import { Modal } from '../../components/Modal';
+import { ModalDeleteAccount } from '../../components/ModalDeleteAccount';
 
 const phoneRegex = new RegExp(
     /^\d{10,11}$/
@@ -37,7 +39,10 @@ type FormProps = z.infer<typeof schema>;
 
 
 export const ProfileScreen = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [modalStatus, setModalStatus] = useState(false);
+    const [confirmDeleteAccount, setConfirmDeleteAccount] = useState(false);
     const [loading, setLoading] = useState(false);
     const [loadingFinish, setLoadingFinish] = useState(false);
     const [error, setError] = useState(false);
@@ -80,7 +85,6 @@ export const ProfileScreen = () => {
         const updateUserInfos = async () => {
             const user = auth.currentUser;
             try {
-                console.log('entrou no try');
                 if (user) {
                     const uid = user.uid;
                     const userDocRef = doc(db, 'users', uid);
@@ -96,7 +100,6 @@ export const ProfileScreen = () => {
                         setLoadingFinish(false);
                         setLoading(false);
                     }, 2000);
-                    console.log("deu certo ");
                 }
             } catch (error) {
                 console.log(error);
@@ -119,11 +122,14 @@ export const ProfileScreen = () => {
         if(loading) setLoading(false);
     }, [setValue]);
 
+    useEffect(()=> {
+        if(confirmDeleteAccount) {
+            handleDeleteAccount();
+        }
+    }, [confirmDeleteAccount]);
+
     const handleLogout = () => {
         signOut(auth).then(()=> {
-            console.log("fazendo logout...");
-            console.log(auth.currentUser?.email);
-            console.log(auth.currentUser?.getIdTokenResult);
             dispatch( clearInfos({}));
             dispatch( clearCart({}));
             dispatch( clearOrders({}));
@@ -138,68 +144,75 @@ export const ProfileScreen = () => {
             try {
                 const userDocRef = doc(db, 'users', uid);
                 await deleteDoc(userDocRef);
-                console.log('deletando documento do usuario do banco');
             } catch (error) {
                 console.error(error);
             }
             deleteUser(user).then(() => {
-                console.log('deletando usuario');
                 dispatch( clearInfos({}));
                 dispatch( clearCart({}));
                 dispatch( clearOrders({}));
+                setConfirmDeleteAccount(false);
+                setModalStatus(false);
+                navigate('/login');
             }).catch((error) => { 
                 console.error(error); 
             });
+        } else {
+            console.log('não exixte user');
         }
+    }
+    const handleDeleteAccountClick = () => {
+        setModalStatus(true);
     }
     return (
         <C.Container>
             <Header />
-            
-            
-            <C.FormArea onSubmit={handleSubmit(handleForm)}>
-                <C.Titulo>Olá, <strong>{userInfos.name.trim().split(" ")[0]}</strong> </C.Titulo>
-                <p>Aqui você pode alterar suas informações pessoais.</p>
-                <C.Label>
-                    Nome:
-                    <C.Input type="text" id="name"  {...register('name')} />
-                    {errors.name && (
-                        <ErrorInput message={errors.name?.message} />
-                    )}
-                </C.Label>
-                <C.Label>
-                    Email:
-                    <C.Input type="email" id="email" readOnly title="O email não pode ser alterado." {...register('email')}/>
-                    {errors.email && (
-                        <ErrorInput message={errors.email?.message} />
-                    )}
-                </C.Label>
-                <C.Label>
-                    Telefone:
-                    <C.Input type="tel" id="phone"  {...register('phone')} />
-                    {errors.phone && (
-                        <ErrorInput message={errors.phone?.message} />
-                    )}
-                </C.Label>
-                
-                <C.Label>
-                    Endereço:
-                    <C.Input type="text" id="address"  {...register('address')} />
-                    {errors.address && (
-                        <ErrorInput message={errors.address?.message} />
-                    )}
-                </C.Label>
-                <C.ButtonSave type="submit" value="salvar"/>
-                {loading && 
-                    <Loader status={loading} loadingFinish={loadingFinish} isError={error} dark={true}/>
-                }
+            <C.FormArea >
+                <form onSubmit={handleSubmit(handleForm)}>
+                    <C.Titulo>Olá, <strong>{userInfos.name.trim().split(" ")[0]}</strong> </C.Titulo>
+                    <p>Aqui você pode alterar suas informações pessoais.</p>
+                    <C.Label>
+                        Nome:
+                        <C.Input type="text" id="name"  {...register('name')} />
+                        {errors.name && (
+                            <ErrorInput message={errors.name?.message} />
+                        )}
+                    </C.Label>
+                    <C.Label>
+                        Email:
+                        <C.Input type="email" id="email" readOnly title="O email não pode ser alterado." {...register('email')}/>
+                        {errors.email && (
+                            <ErrorInput message={errors.email?.message} />
+                        )}
+                    </C.Label>
+                    <C.Label>
+                        Telefone:
+                        <C.Input type="tel" id="phone"  {...register('phone')} />
+                        {errors.phone && (
+                            <ErrorInput message={errors.phone?.message} />
+                        )}
+                    </C.Label>
+                    
+                    <C.Label>
+                        Endereço:
+                        <C.Input type="text" id="address"  {...register('address')} />
+                        {errors.address && (
+                            <ErrorInput message={errors.address?.message} />
+                        )}
+                    </C.Label>
+                    <C.ButtonSave type="submit" value="salvar"/>
+                    {loading &&
+                        <Loader status={loading} loadingFinish={loadingFinish} isError={error} dark={true}/>
+                    }
+                </form>
                 <C.ButtonsArea>
                     <C.Button onClick={handleLogout}>Sair</C.Button>
-                    <C.Button onClick={handleDeleteAccount}>Excluir Conta</C.Button>
+                    <C.Button onClick={handleDeleteAccountClick}>Excluir Conta</C.Button>
                 </C.ButtonsArea>
             </C.FormArea>
-            <p>current user email{auth.currentUser?.email}</p>
-            <C.Titulo>Perfil do usuário: <strong>{userInfos.name}</strong> </C.Titulo>
+            <Modal status={modalStatus} setStatus={setModalStatus}>
+                <ModalDeleteAccount setModalStatus={setModalStatus} setConfirmDeleteAccount={setConfirmDeleteAccount}/>
+            </Modal>
         </C.Container>
     );
 }

@@ -13,6 +13,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ErrorInput } from '../../components/ErrorInput';
+import { Loader } from '../../components/Loader';
 
 const phoneRegex = new RegExp(
     /^\d{10,11}$/
@@ -34,17 +35,17 @@ type FormProps = z.infer<typeof schema>;
 export const Register = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [aa, setAa] = useState('');
-    const [nameInput, setNameInput] = useState('');
-    const [emailInput, setEmailInput] = useState('');
-    const [passwordInput, setPasswordInput] = useState('');
-    const [addressInput, setAddressInput] = useState('');
-    const [phoneInput, setPhoneInput] = useState('');
-    const name = useAppSelector(state => state.persistedReducer.user.name);
+    const [loading, setLoading] = useState(false);
+    const [loadingFinish, setLoadingFinish] = useState(false);
+    const [error, setError] = useState(false);
+    const [message, setMessage] = useState('');
     
     const { handleSubmit, register, setValue, formState: { errors} } = useForm<FormProps>({mode: 'all', reValidateMode: 'onChange', resolver: zodResolver(schema)});
     const handleForm = async (data: FormProps) => {
         try {
+            setLoadingFinish(false);
+            setError(false);
+            setLoading(true);
             const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
             const user = userCredential.user;
         
@@ -53,7 +54,7 @@ export const Register = () => {
             if (user) {
                 const userDocRef = doc(db, 'users', user.uid);
                 const userData = { name: data.name, email: user.email, phone: data.phone, address: data.address };
-            
+                
                 await setDoc(userDocRef, userData);
     
                 dispatch(setToken({ token: user.getIdTokenResult()}));
@@ -63,58 +64,29 @@ export const Register = () => {
                     phone: data.phone,
                     address: data.address
                 }));
-                setNameInput('');
-                setEmailInput('');
-                setAddressInput('');
-                setPhoneInput('');
-                setPasswordInput('');
-                navigate('/profile');
+
+                setLoadingFinish(true);
+                setTimeout(() => {
+                    setLoading(false);
+                    navigate('/profile');
+                }, 2000);
             } else {
-                console.log('usuario nçao existe');
+                console.log('usuario não existe');
             }
     
         } catch (error:any) {
             const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
+            console.log(errorCode);
+            setLoadingFinish(true);
+            setError(true);
+            if(errorCode == "auth/email-already-in-use") {
+                setMessage('Esse email já está em uso');
+            }
         }
     }
-    
-    const handleSignUp = async (e: ChangeEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, emailInput, passwordInput);
-        const user = userCredential.user;
-    
-        console.log("Usuário criado e logado automaticamente com uid: " + user.uid);
-    
-        if (user) {
-            const userDocRef = doc(db, 'users', user.uid);
-            const userData = { name:nameInput, email: user.email, phone: phoneInput, address: addressInput };
-        
-            await setDoc(userDocRef, userData);
 
-            dispatch(setToken({ token: user.getIdTokenResult()}));
-            dispatch( setInfo({
-                name: nameInput,
-                email: emailInput,
-                phone: phoneInput,
-                address: addressInput
-            }));
-            setNameInput('');
-            setEmailInput('');
-            setAddressInput('');
-            setPhoneInput('');
-            setPasswordInput('');
-            navigate('/profile');
-        }
-
-      } catch (error:any) {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        // Trate qualquer erro ocorrido durante o processo
-      }
+    const handleInputChange = () => {
+        setLoading(false);
     };
     
     return (
@@ -124,48 +96,51 @@ export const Register = () => {
                 <C.Titulo>Por favor digite suas informações de Cadastro</C.Titulo>
                 <C.Label>
                     Nome:
-                    <C.Input type="text" id="name"  {...register('name')} />
+                    <C.Input type="text" id="name"  {...register('name')} onChange={handleInputChange}/>
                     {errors.name && (
                         <ErrorInput message={errors.name?.message} />
                     )}
                 </C.Label>
                 <C.Label>
                     Email:
-                    <C.Input type="text" id="email"  {...register('email')} />
+                    <C.Input type="text" id="email"  {...register('email')} onChange={handleInputChange}/>
                     {errors.email && (
                         <ErrorInput message={errors.email?.message} />
                     )}
                 </C.Label>
                 <C.Label>
                     Telefone:
-                    <C.Input type="text" id="phone"  {...register('phone')} />
+                    <C.Input type="text" id="phone"  {...register('phone')} onChange={handleInputChange}/>
                     {errors.phone && (
                         <ErrorInput message={errors.phone?.message} />
                     )}
                 </C.Label>
                 <C.Label>
                     Endereço:
-                    <C.Input type="text" id="address"  {...register('address')} />
+                    <C.Input type="text" id="address"  {...register('address')} onChange={handleInputChange}/>
                     {errors.address && (
                         <ErrorInput message={errors.address?.message} />
                     )}
                 </C.Label>
                 <C.Label>
                     Senha:
-                    <C.Input type="text" id="password"  {...register('password')} />
+                    <C.Input type="password" id="password"  {...register('password')} onChange={handleInputChange}/>
                     {errors.password && (
                         <ErrorInput message={errors.password?.message} />
                     )}
                 </C.Label>
                 <C.Label>
                     Confirmar senha:
-                    <C.Input type="text" id="confirmPassword"  {...register('confirmPassword')} />
+                    <C.Input type="password" id="confirmPassword"  {...register('confirmPassword')} onChange={handleInputChange}/>
                     {errors.confirmPassword && (
                         <ErrorInput message={errors.confirmPassword?.message} />
                     )}
                 </C.Label>
                     
                 <C.Submit>Cadastrar</C.Submit>
+                {loading && 
+                    <Loader status={loading} loadingFinish={loadingFinish} isError={error} message={message} dark={true}/>
+                }
                 <p>Você já tem uma conta?</p>
                 <Link to={'/login'} >Acesse sua conta aqui</Link>
             </C.FormArea>

@@ -4,7 +4,6 @@ export const Container = styled.div`
     width: 100%;
     margin: 15px;
 `;
-
 export const HeaderList = styled.div`
     display: flex;
     align-items: center;
@@ -13,7 +12,6 @@ export const HeaderList = styled.div`
     color: #fff;
     margin: 20px 0;
 `;
-
 export const Button = styled.button`
     background-color: #fff;
     border-radius: 5px;
@@ -35,16 +33,14 @@ export const Button = styled.button`
         color: #E3531a;
     }
 `;
-
-export const OrdersArea = styled.div<{orderOpenIndex:number}>`
+export const OrdersArea = styled.div<{orderopenindex:number}>`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
     color: #fff;
     
-    >div:nth-child(${props=>props.orderOpenIndex +1 }) {
+    >div:nth-child(${props=>props.orderopenindex +1 }) {
         outline: 4px solid #E3531a;
-        /* border-style: inset; */
     }
     @media (max-width: 991px) {
         grid-template-columns: repeat(2, 1fr);

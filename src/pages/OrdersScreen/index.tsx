@@ -1,5 +1,5 @@
-import { ChangeEvent, useState, useEffect, useRef } from 'react';
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, useRef } from 'react';
+import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import * as C from './styled';
@@ -8,11 +8,10 @@ import { OrderItem } from '../../components/OrderItem';
 import { OrderOpen } from '../../components/OrderOpen';
 import { FiTrash2 } from 'react-icons/fi';
 import { clearOrders} from '../../redux/reducers/OrdersReducer';
-import { collection, deleteDoc, doc, getDocs, onSnapshot, query } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs} from 'firebase/firestore';
 import { auth, db } from '../../services/firebaseConfig';
 
 export const OrdersScreen = () => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [orderOpenIndex, setOrderOpenIndex] = useState(0)
     const componenteBRef = useRef<HTMLInputElement>(null);
@@ -39,13 +38,12 @@ export const OrdersScreen = () => {
                 const deletePromises = ordersQuerySnapshot.docs.map((doc) => deleteDoc(doc.ref));
                 await Promise.all(deletePromises);
           
-                // Subcoleção "orderss" excluída com sucesso
-                console.log('Excluindo a subcoleção "orders" do usuário do banco');
               } catch (error) {
-                // Ocorreu um erro ao excluir a subcoleção "orderss"
                 console.error(error);
               }
               dispatch(clearOrders({}));
+        } else {
+            console.log('Não existe usuário');
         }
     }
         
@@ -73,7 +71,7 @@ export const OrdersScreen = () => {
                     </C.Button>
                 </C.NoProductsArea>
             }
-            <C.OrdersArea orderOpenIndex={getOrders.length - orderOpenIndex -1}>
+            <C.OrdersArea orderopenindex={getOrders.length - orderOpenIndex -1}>
                 {getOrders.slice().reverse().map((order, index)=>(
                     <OrderItem key={index} data={order} onClick={handleIndexOrderOpen} index={index} componenteBRef={componenteBRef}/>
                 ))}

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Container = styled.div`
     width: 100%;
 `;
-
 export const Titulo = styled.h2`
     text-align: center;
     color: #FA8229;
@@ -32,7 +31,6 @@ export const Input = styled.input`
     border: 1px solid #FA8229;
     border-radius: 5px;
 `;
-
 export const Submit = styled.button`
     width: fit-content;
     margin:  20px auto;

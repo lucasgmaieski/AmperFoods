@@ -4,7 +4,6 @@ export const Container = styled.div`
     width: 100%;
     padding: 15px;
 `;
-
 export const NoProducts = styled.p`
     color: #fff;
     margin-top: 40px;
@@ -18,21 +17,17 @@ export const CategoryArea = styled.div`
         text-shadow: 2px 1px 2px #E35319;
     }
 `;
-
 export const CategoryList = styled.div`
     display: flex;
     margin-top: 10px;
 `;
-
 export const ProductArea = styled.div`
     margin-top: 25px;
     margin-bottom: 10px;
 `;
-
 export const ProductList = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
     gap: 15px;
     @media (max-width: 991px) {
         grid-template-columns: repeat(2, 1fr);
@@ -41,14 +36,12 @@ export const ProductList = styled.div`
         grid-template-columns: repeat(1, 1fr);
     }
 `;
-
 export const ProductPaginationArea = styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 20px;
 `;
-
 export const ProductPaginationItem = styled.div<{active: number, current: number}>`
     background-color: ${props=>props.active == props.current ? '#E35319' : '#fff'};
     text-decoration: ${props=>props.active == props.current ? 'underline' : 'none'};
@@ -64,4 +57,7 @@ export const ProductPaginationItem = styled.div<{active: number, current: number
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.56);
         background-color: ${props=>props.active == props.current ? '#E35319' : '#f7f7f7'};
     }
+`;
+export const ContainerLoaderPage = styled.div`
+    margin-top: 16vh;
 `;
