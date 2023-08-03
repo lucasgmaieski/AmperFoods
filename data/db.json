@@ -3,7 +3,7 @@
     {
       "id": 1,
       "id_cat": 1,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/bolo-de-morango.png",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/bolo-de-morango.png",
       "calories": 1200,
       "name": "Bolo de Morango",
       "points": 0,
@@ -12,7 +12,7 @@
     {
       "id": 2,
       "id_cat": 1,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/bolo-de-chocolate.png",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/bolo-de-chocolate.png",
       "calories": 1200,
       "name": "Bolo de Chocolate",
       "points": 0,
@@ -21,7 +21,7 @@
     {
       "id": 3,
       "id_cat": 1,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/bolo-de-baunilha.png",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/bolo-de-baunilha.png",
       "calories": 1200,
       "name": "Bolo de Baunilha",
       "points": 0,
@@ -30,7 +30,7 @@
     {
       "id": 4,
       "id_cat": 1,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/bolo-de-banana.png",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/bolo-de-banana.png",
       "calories": 1200,
       "name": "Bolo de Banana",
       "points": 0,
@@ -39,7 +39,7 @@
     {
       "id": 5,
       "id_cat": 1,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/bolo-de-fuba.png",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/bolo-de-fuba.png",
       "calories": 1200,
       "name": "Bolo de Fubá",
       "points": 0,
@@ -48,7 +48,7 @@
     {
       "id": 6,
       "id_cat": 2,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/torta-de-morango.png",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/torta-de-morango.png",
       "calories": 1100,
       "name": "Torta de Morango",
       "points": 0,
@@ -57,7 +57,7 @@
     {
       "id": 7,
       "id_cat": 2,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/torta-de-brigadeiro.PNG",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/torta-de-brigadeiro.PNG",
       "calories": 1100,
       "name": "Torta de Brigadeiro",
       "points": 0,
@@ -66,7 +66,7 @@
     {
       "id": 8,
       "id_cat": 2,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/torta-de-limao.png",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/torta-de-limao.png",
       "calories": 1100,
       "name": "Torta de Limão",
       "points": 0,
@@ -75,7 +75,7 @@
     {
       "id": 8,
       "id_cat": 2,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/torta-de-maracuja.PNG",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/torta-de-maracuja.PNG",
       "calories": 1100,
       "name": "Torta de Maracujá",
       "points": 0,
@@ -84,7 +84,7 @@
     {
       "id": 9,
       "id_cat": 3,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/cookies-de-amendoim.png",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/cookies-de-amendoim.png",
       "calories": 200,
       "name": "Cookie de Amendoim",
       "points": 0,
@@ -93,7 +93,7 @@
     {
       "id": 10,
       "id_cat": 3,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/cookie-de-chocolate.PNG",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/cookie-de-chocolate.PNG",
       "calories": 200,
       "name": "Cookie de Chocolate",
       "points": 0,
@@ -102,7 +102,7 @@
     {
       "id": 11,
       "id_cat": 3,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/cookie-de-castanhas.png",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/cookie-de-castanhas.png",
       "calories": 200,
       "name": "Cookie de Castanhas",
       "points": 0,
@@ -111,7 +111,7 @@
     {
       "id": 12,
       "id_cat": 3,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/cookie-de-chocolate-branco.PNG",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/cookie-de-chocolate-branco.PNG",
       "calories": 200,
       "name": "Cookie de Chocolate Branco",
       "points": 0,
@@ -120,7 +120,7 @@
     {
       "id": 13,
       "id_cat": 4,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/coxinha-de-frango.png",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/coxinha-de-frango.png",
       "calories": 350,
       "name": "Coxinha de Frango",
       "points": 0,
@@ -129,7 +129,7 @@
     {
       "id": 14,
       "id_cat": 4,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/pastel-de-frango.PNG",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/pastel-de-frango.PNG",
       "calories": 350,
       "name": "Pastel de Frango",
       "points": 0,
@@ -138,7 +138,7 @@
     {
       "id": 15,
       "id_cat": 4,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/sandwiche-de-mortadela.png",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/sandwiche-de-mortadela.png",
       "calories": 250,
       "name": "Sandwiche de Mortadela",
       "points": 0,
@@ -147,7 +147,7 @@
     {
       "id": 16,
       "id_cat": 4,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/enroladinho-de-salsicha.png",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/enroladinho-de-salsicha.png",
       "calories": 50,
       "name": "Enroladinho de Salsicha",
       "points": 0,
@@ -156,7 +156,7 @@
     {
       "id": 17,
       "id_cat": 4,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/mini-pizza.PNG",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/mini-pizza.PNG",
       "calories": "200",
       "name": "Mini Pizza",
       "points": 0,
@@ -165,7 +165,7 @@
     {
       "id": 18,
       "id_cat": 4,
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/products/esfirra.PNG",
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/products/esfirra.PNG",
       "calories": 200,
       "name": "Esfirra",
       "points": 0,
@@ -177,22 +177,22 @@
     {
       "id": 1,
       "name": "Bolos",
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/categories/cake.png"
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/categories/cake.png"
     },
     {
       "id": 2,
       "name": "Tortas",
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/categories/pie.png"
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/categories/pie.png"
     },
     {
       "id": 3,
       "name": "Cookies",
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/categories/cookies.png"
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/categories/cookies.png"
     },
     {
       "id": 4,
       "name": "Salgados",
-      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/assets/categories/sandwich.png"
+      "image": "https://raw.githubusercontent.com/lucasgmaieski/AmperFoods/main/src/assets/categories/sandwich.png"
     }
   ]
 }

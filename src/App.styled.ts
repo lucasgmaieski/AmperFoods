@@ -33,7 +33,7 @@ export const Menu = styled.div`
 export const PageBody = styled.div`
     display: flex;
     background-color: #c5c5c5;
-    background-image: url('../assets/bg-af2.png');
+    background-image: url('/assets/bg-af2.png');
     flex: 1;
     overflow-y: auto;
 `;
