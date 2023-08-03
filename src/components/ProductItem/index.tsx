@@ -24,7 +24,7 @@ export const ProductItem = ({data, onClick}: Props) => {
             </C.ProductInfoArea>
 
             <C.ProductButtonArea>
-                <C.ProductButton src="/assets/next-af.png"/>
+                <C.ProductButton src="/public/next-af.png"/>
             </C.ProductButtonArea>
         </C.Container>
     )

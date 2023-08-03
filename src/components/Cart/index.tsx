@@ -140,10 +140,10 @@ export const Cart = () => {
     return (
         <C.CartArea>
             <C.CartHeader onClick={handleCartClick}>
-                <C.CartIcon src="/assets/cart.png"/>
+                <C.CartIcon src="/public/cart.png"/>
                 <C.CartText>Meu Carrinho ({products.length})</C.CartText>
                 {show && 
-                    <C.CartIcon src="/assets/down.png"/>
+                    <C.CartIcon src="/public/down.png"/>
                 }
             </C.CartHeader>
             <C.CartBody show={show.toString()}>
@@ -157,12 +157,12 @@ export const Cart = () => {
                         </C.ProductInfoArea>
                         <C.ProductQuantityArea>
                             <C.ProductQtIcon 
-                                src="/assets/minus.png"
+                                src="/public/minus.png"
                                 onClick={()=>handleProductChange(index, '-')}
                             />
                             <C.ProductQtText>{item.qt}</C.ProductQtText>
                             <C.ProductQtIcon 
-                                src="/assets/plus.png"
+                                src="/public/plus.png"
                                 onClick={()=>handleProductChange(index, '+')}
                             />
                         </C.ProductQuantityArea>

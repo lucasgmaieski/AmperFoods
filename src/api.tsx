@@ -1,6 +1,6 @@
 import { ProdItem } from "./types/ProdItem";
 
-let BASE = 'http://localhost:5000';
+let BASE = import.meta.env.VITE_APP_URL_BASE;
 
 export const api = {
     getCategories: async () => {

@@ -28,7 +28,7 @@ export const SearchInput = styled.input<{active: string}>`
     width: ${props=> props.active == 'true' ? 300 : 0}px;
     height: 50px;
     background-color: #fff;
-    background-image: url('/assets/search-af.png');
+    background-image: url('/public/search-af.png');
     background-size: 30px;
     background-repeat: no-repeat;
     background-position: 10px center;
