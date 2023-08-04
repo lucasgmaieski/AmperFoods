@@ -48,9 +48,9 @@ export const ModalProduct = ({data, setStatus}: Props) => {
                     </C.ProductDetails>
                     <C.ProductQuantityArea>
                         <C.ProductQuantity>
-                            <C.ProductQtImage onClick={handleMinusQt} src="/public/minus.png"/>
+                            <C.ProductQtImage onClick={handleMinusQt} src="/minus.png"/>
                             <C.ProductQtText>{qt}</C.ProductQtText>
-                            <C.ProductQtImage onClick={handlePlusQt} src="/public/plus.png"/>
+                            <C.ProductQtImage onClick={handlePlusQt} src="/plus.png"/>
                         </C.ProductQuantity>
                         <C.ProductPrice>
                             R$ {((data?.price ?? 1) * qt).toFixed(2)}

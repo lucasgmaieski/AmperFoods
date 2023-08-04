@@ -80,7 +80,7 @@ export default () => {
                     <h3>Selecione uma categoria</h3>
                     <C.CategoryList>
                         <CategoryItem 
-                            data={{id:0, name:'Todas as categorias', image:"/public/categories/food-and-restaurant-af.png"}} 
+                            data={{id:0, name:'Todas as categorias', image:"/categories/food-and-restaurant-af.png"}} 
                             activeCategory={activeCategory}
                             setActiveCategory={setActiveCategory}
                             setActivePage={setActivePage}

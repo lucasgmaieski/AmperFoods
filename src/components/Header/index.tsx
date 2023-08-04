@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export const Header = () => {
     return (
         <C.Container>
-            <Link to={'/'}><C.Logo src="/public/logo-amperfoods-orange-2.png" /></Link>
+            <Link to={'/'}><C.Logo src="/logo-amperfoods-orange-2.png" /></Link>
             <C.SocialArea>
                 <Link to="" title='AmperFoods no Instagram'>
                     <FiInstagram />
