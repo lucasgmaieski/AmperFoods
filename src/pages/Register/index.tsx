@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ErrorInput } from '../../components/ErrorInput';
 import { Loader } from '../../components/Loader';
+import { Helmet } from 'react-helmet';
 
 const phoneRegex = new RegExp(
     /^\d{10,11}$/
@@ -89,7 +90,11 @@ export const Register = () => {
     
     return (
         <C.Container>
-
+            <Helmet>
+                <meta name="og:title" content="Cadastre-se - Amper Foods"/>
+                <meta property="og:url" content="https://amper-foods.vercel.app/register"/>
+                <title>Cadastre-se - Amper Foods</title>
+            </Helmet>
             <C.FormArea onSubmit={handleSubmit(handleForm)}>
                 <C.Titulo>Por favor digite suas informações de Cadastro</C.Titulo>
                 <C.Label>

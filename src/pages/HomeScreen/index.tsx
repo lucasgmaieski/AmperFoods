@@ -9,6 +9,7 @@ import { Modal } from '../../components/Modal';
 import { ModalProduct } from '../../components/ModalProduct';
 import { Loader } from '../../components/Loader';
 import { HeaderHome } from '../../components/HeaderHome';
+import { Helmet } from 'react-helmet';
 
 let searchTimer: NodeJS.Timeout | undefined = undefined;
 
@@ -73,6 +74,11 @@ export default () => {
     
     return (
         <C.Container>
+            <Helmet>
+                <meta name="og:title" content=" Amper Foods"/>
+                <meta property="og:url" content="https://amper-foods.vercel.app/"/>
+                <title>Amper Foods</title>
+            </Helmet>
             <HeaderHome search={headerSearch} onSearch={setHeaderSerach}/>
 
             {categories.length > 0 && !loadingPage &&

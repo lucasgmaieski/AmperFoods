@@ -14,6 +14,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ErrorInput } from '../../components/ErrorInput';
 import { Loader } from '../../components/Loader';
+import { Helmet } from 'react-helmet';
 
 const schema = z.object({
     email: z.string().email({message: 'Endereço de email inválido'}),
@@ -120,6 +121,11 @@ export const Login = () => {
     
     return (
         <C.Container>
+            <Helmet>
+                <meta name="og:title" content="Login - Amper Foods"/>
+                <meta property="og:url" content="https://amper-foods.vercel.app/login"/>
+                <title>Login - Amper Foods</title>
+            </Helmet>
             <C.FormArea onSubmit={handleSubmit(handleForm)}>
             <C.Titulo>Faça Login para comprar</C.Titulo>
                 <C.Label>

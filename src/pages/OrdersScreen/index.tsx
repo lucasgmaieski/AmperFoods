@@ -10,6 +10,7 @@ import { FiTrash2 } from 'react-icons/fi';
 import { clearOrders} from '../../redux/reducers/OrdersReducer';
 import { collection, deleteDoc, doc, getDocs} from 'firebase/firestore';
 import { auth, db } from '../../services/firebaseConfig';
+import { Helmet } from 'react-helmet';
 
 export const OrdersScreen = () => {
     const dispatch = useDispatch();
@@ -49,6 +50,11 @@ export const OrdersScreen = () => {
         
     return (
         <C.Container ref={componenteBRef}>
+            <Helmet>
+                <meta name="og:title" content="Pedidos - Amper Foods"/>
+                <meta property="og:url" content="https://amper-foods.vercel.app/orders"/>
+                <title>Pedidos - Amper Foods</title>
+            </Helmet>
             <Header />
             {getOrders.length > 0 && 
                 <OrderOpen data={getOrders[orderOpenIndex]}/>

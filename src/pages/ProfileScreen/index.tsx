@@ -17,6 +17,7 @@ import { Loader } from '../../components/Loader';
 import { ErrorInput } from '../../components/ErrorInput';
 import { Modal } from '../../components/Modal';
 import { ModalDeleteAccount } from '../../components/ModalDeleteAccount';
+import { Helmet } from 'react-helmet';
 
 const phoneRegex = new RegExp(
     /^\d{10,11}$/
@@ -163,6 +164,11 @@ export const ProfileScreen = () => {
     }
     return (
         <C.Container>
+            <Helmet>
+                <meta name="og:title" content="Perfil - Amper Foods"/>
+                <meta property="og:url" content="https://amper-foods.vercel.app/profile"/>
+                <title>Perfil - Amper Foods</title>
+            </Helmet>
             <Header />
             <C.FormArea >
                 <form onSubmit={handleSubmit(handleForm)}>
