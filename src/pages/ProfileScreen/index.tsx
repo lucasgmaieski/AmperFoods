@@ -44,6 +44,7 @@ export const ProfileScreen = () => {
     const [loading, setLoading] = useState(false);
     const [loadingFinish, setLoadingFinish] = useState(false);
     const [error, setError] = useState(false);
+    const [message, setMessage] = useState('');
 
     const userInfos = useAppSelector(state => state.persistedReducer.user);
 
@@ -55,8 +56,6 @@ export const ProfileScreen = () => {
             const listenInfoUser = onSnapshot(userDocRef, (snapshot) => {
             // O código aqui será executado sempre que houver alterações nos dados do usuário
             const userData = snapshot.data();
-            console.log('userData:');
-            console.log(userData);
             dispatch( setInfo({
                 name: userData?.name,
                 email: userData?.email,
@@ -73,7 +72,6 @@ export const ProfileScreen = () => {
         setLoadingFinish(false);
         setError(false);
         setLoading(true);
-        console.log({data});
         dispatch( setInfo({
             name: data.name,
             email: data.email,
@@ -94,6 +92,7 @@ export const ProfileScreen = () => {
                         address: data.address
                     });
                     setLoadingFinish(true);
+                    setMessage('Informações salvas com sucesso!');
                     setTimeout(() => {
                         setLoadingFinish(false);
                         setLoading(false);
@@ -165,6 +164,7 @@ export const ProfileScreen = () => {
     return (
         <C.Container>
             <Helmet>
+                <meta name="robots" content="noindex, nofollow"/>
                 <meta name="og:title" content="Perfil - Amper Foods"/>
                 <meta property="og:url" content="https://amper-foods.vercel.app/profile"/>
                 <title>Perfil - Amper Foods</title>
@@ -205,7 +205,7 @@ export const ProfileScreen = () => {
                     </C.Label>
                     <C.ButtonSave type="submit" value="salvar"/>
                     {loading &&
-                        <Loader status={loading} loadingFinish={loadingFinish} isError={error} dark={true}/>
+                        <Loader status={loading} loadingFinish={loadingFinish} isError={error} dark={true} message={message}/>
                     }
                 </form>
                 <C.ButtonsArea>

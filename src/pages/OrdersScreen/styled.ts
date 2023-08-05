@@ -65,3 +65,6 @@ export const NoProductsArea = styled.div`
         flex-direction: column;
     }
 `;
+export const ContainerLoaderPage = styled.div`
+    margin-top: 16vh;
+`;

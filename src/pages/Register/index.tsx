@@ -13,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ErrorInput } from '../../components/ErrorInput';
 import { Loader } from '../../components/Loader';
 import { Helmet } from 'react-helmet';
+import { Header } from '../../components/Header';
 
 const phoneRegex = new RegExp(
     /^\d{10,11}$/
@@ -48,8 +49,6 @@ export const Register = () => {
             const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
             const user = userCredential.user;
         
-            console.log("Usuário criado e logado automaticamente com uid: " + user.uid);
-        
             if (user) {
                 const userDocRef = doc(db, 'users', user.uid);
                 const userData = { name: data.name, email: user.email, phone: data.phone, address: data.address };
@@ -75,7 +74,6 @@ export const Register = () => {
     
         } catch (error:any) {
             const errorCode = error.code;
-            console.log(errorCode);
             setLoadingFinish(true);
             setError(true);
             if(errorCode == "auth/email-already-in-use") {
@@ -91,10 +89,12 @@ export const Register = () => {
     return (
         <C.Container>
             <Helmet>
+                <meta name="robots" content="noindex, nofollow"/>
                 <meta name="og:title" content="Cadastre-se - Amper Foods"/>
                 <meta property="og:url" content="https://amper-foods.vercel.app/register"/>
                 <title>Cadastre-se - Amper Foods</title>
             </Helmet>
+            <Header />
             <C.FormArea onSubmit={handleSubmit(handleForm)}>
                 <C.Titulo>Por favor digite suas informações de Cadastro</C.Titulo>
                 <C.Label>

@@ -6,8 +6,6 @@ export const api = {
     getCategories: async () => {
         const res = await fetch(BASE+'/categories');
         const json = await res.json();
-        console.log('categories'+json);
-        console.log(json);
         return json;
     },
     getProducts: async (category: number, page: number, search: string) => {
@@ -36,7 +34,6 @@ export const api = {
         const endIndex = startIndex + pageSize;
         const paginatedResults = results.slice(startIndex, endIndex);
     
-        console.log('totalPages: '+totalPages);
         results = {
             currentPage,
             totalPages,

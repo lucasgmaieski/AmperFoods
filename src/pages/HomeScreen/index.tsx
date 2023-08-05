@@ -59,7 +59,7 @@ export default () => {
         getCategories();
         setTimeout(() => {
             setLoadingPage(false);
-        }, 600);
+        }, 500);
     }, []);
 
     useEffect(()=>{

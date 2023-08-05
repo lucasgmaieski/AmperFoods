@@ -15,6 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ErrorInput } from '../../components/ErrorInput';
 import { Loader } from '../../components/Loader';
 import { Helmet } from 'react-helmet';
+import { Header } from '../../components/Header';
 
 const schema = z.object({
     email: z.string().email({message: 'Endereço de email inválido'}),
@@ -29,13 +30,18 @@ export const Login = () => {
     const [loadingFinish, setLoadingFinish] = useState(false);
     const [error, setError] = useState(false);
     const [message, setMessage] = useState('');
+    const [loadingPage, setLoadingPage] = useState(true);
 
     const token = useAppSelector(state => state.persistedReducer.user.token);
+    const name = useAppSelector(state => state.persistedReducer.user.name);
 
     useEffect(()=> {
         if(token || token != '') {
             navigate('/');
         }
+        setTimeout(() => {
+            setLoadingPage(false);
+        }, 300);
     }, []);
 
     const { handleSubmit, register, formState: { errors} } = useForm<FormProps>({mode: 'all', reValidateMode: 'onChange', resolver: zodResolver(schema)});
@@ -47,9 +53,7 @@ export const Login = () => {
             const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
             const user = userCredential.user;
             if(user) {
-                console.log("usuario logado com sucesso: "+ user.email);
-                const tokenUser = await user.getIdToken();
-                console.log('tokenUser1: '+tokenUser);
+                // const tokenUser = await user.getIdToken();
                 const uid = user.uid;
                 // get orders in db and save localStorage
                 try {
@@ -96,6 +100,7 @@ export const Login = () => {
                 console.error(error);
                 }
                 setLoadingFinish(true);
+                setMessage(`Bem-vindo de volta ${name}!`)
                 setTimeout(() => {
                     setLoading(false);
                     navigate('/');
@@ -122,36 +127,46 @@ export const Login = () => {
     return (
         <C.Container>
             <Helmet>
+                <meta name="robots" content="noindex, nofollow"/>
                 <meta name="og:title" content="Login - Amper Foods"/>
                 <meta property="og:url" content="https://amper-foods.vercel.app/login"/>
                 <title>Login - Amper Foods</title>
             </Helmet>
-            <C.FormArea onSubmit={handleSubmit(handleForm)}>
-            <C.Titulo>Faça Login para comprar</C.Titulo>
-                <C.Label>
-                    Email:
-                    <C.Input type="text" id="email"  {...register('email')} onChange={handleInputChange}/>
-                    {errors.email && (
-                        <ErrorInput message={errors.email?.message} />
-                    )}
-                </C.Label>
-                <C.Label>
-                    Senha:
-                    <C.Input type="password" id="password"  {...register('password')} onChange={handleInputChange}/>
-                    {errors.password && (
-                        <ErrorInput message={errors.password?.message} />
-                    )}
-                </C.Label>
-                    
-                <Link to={'/#'} >Esqueceu sua senha?</Link>
-                    
-                <C.Submit>Entrar</C.Submit>
-                {loading && 
-                    <Loader status={loading} loadingFinish={loadingFinish} isError={error} dark={true} message={message}/>
-                }
-                <p>Você não tem uma conta?</p>
-                <Link to={'/register'} >Crie a sua conta aqui</Link>
-            </C.FormArea>
+            <Header />
+            {!loadingPage &&
+                <C.FormArea onSubmit={handleSubmit(handleForm)}>
+                    <C.Titulo>Faça Login para comprar</C.Titulo>
+                    <C.Label>
+                        Email:
+                        <C.Input type="text" id="email"  {...register('email')} onChange={handleInputChange}/>
+                        {errors.email && (
+                            <ErrorInput message={errors.email?.message} />
+                        )}
+                    </C.Label>
+                    <C.Label>
+                        Senha:
+                        <C.Input type="password" id="password"  {...register('password')} onChange={handleInputChange}/>
+                        {errors.password && (
+                            <ErrorInput message={errors.password?.message} />
+                        )}
+                    </C.Label>
+                        
+                    <Link to={'/#'} >Esqueceu sua senha?</Link>
+                        
+                    <C.Submit>Entrar</C.Submit>
+                    {loading && 
+                        <Loader status={loading} loadingFinish={loadingFinish} isError={error} dark={true} message={message}/>
+                    }
+                    <p>Você não tem uma conta?</p>
+                    <Link to={'/register'} >Crie a sua conta aqui</Link>
+                </C.FormArea>
+            }
+            
+            {loadingPage &&
+                <C.ContainerLoaderPage>
+                    <Loader status={true} loadingFinish={false} isError={false} message='' dark={false}/>
+                </C.ContainerLoaderPage>
+            }
         </C.Container>
     );
 }

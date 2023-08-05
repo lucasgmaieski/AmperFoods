@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    width: 100%
+    width: 100%;
+    padding: 15px;
 `;
 export const Titulo = styled.h2`
     text-align: center;
@@ -48,4 +49,7 @@ export const Submit = styled.button`
         background-color: #f17a22;
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.36);
     }
+`;
+export const ContainerLoaderPage = styled.div`
+    margin-top: 16vh;
 `;

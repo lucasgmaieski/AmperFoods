@@ -70,7 +70,7 @@ export const Cart = () => {
                         totalPayable: totalPayable,
                         products: products
                     });
-                    console.log("pedido adicionado com sucesso ");
+                    
                     // Pedido adicionado com sucesso à subcoleção "orders" dentro do documento do usuário
                     dispatch( clearCart())
                     setLoading(true);

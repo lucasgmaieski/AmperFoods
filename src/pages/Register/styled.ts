@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     width: 100%;
+    padding: 15px;
 `;
 export const Titulo = styled.h2`
     text-align: center;
@@ -13,7 +14,7 @@ export const FormArea = styled.form`
     padding: 20px;
     border-radius: 20px;
     max-width: 400px;
-    margin: 7vh auto;
+    margin: 3vh auto;
 `;
 export const Label = styled.div`
     display: flex;

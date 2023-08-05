@@ -11,13 +11,21 @@ import { clearOrders} from '../../redux/reducers/OrdersReducer';
 import { collection, deleteDoc, doc, getDocs} from 'firebase/firestore';
 import { auth, db } from '../../services/firebaseConfig';
 import { Helmet } from 'react-helmet';
+import { Loader } from '../../components/Loader';
 
 export const OrdersScreen = () => {
     const dispatch = useDispatch();
     const [orderOpenIndex, setOrderOpenIndex] = useState(0)
     const componenteBRef = useRef<HTMLInputElement>(null);
+    const [loadingPage, setLoadingPage] = useState(true);
 
     const getOrders = useAppSelector(state => state.persistedReducer.orders.orders);
+
+    useEffect(()=> {
+        setTimeout(() => {
+            setLoadingPage(false);
+        }, 500);
+    }, []);
 
     useEffect(()=>{
         setOrderOpenIndex(getOrders.length -1);
@@ -31,6 +39,7 @@ export const OrdersScreen = () => {
     const handleClearOrders = async () => {
         const user = auth.currentUser;
         if(user) {
+            setLoadingPage(true);
             const uid = user.uid;
             try {
                 const userDocRef = doc(db, 'users', uid);
@@ -38,11 +47,12 @@ export const OrdersScreen = () => {
           
                 const deletePromises = ordersQuerySnapshot.docs.map((doc) => deleteDoc(doc.ref));
                 await Promise.all(deletePromises);
-          
+                
               } catch (error) {
                 console.error(error);
               }
               dispatch(clearOrders());
+              setLoadingPage(false);
         } else {
             console.log('Não existe usuário');
         }
@@ -51,16 +61,17 @@ export const OrdersScreen = () => {
     return (
         <C.Container ref={componenteBRef}>
             <Helmet>
+                <meta name="robots" content="noindex, nofollow"/>
                 <meta name="og:title" content="Pedidos - Amper Foods"/>
                 <meta property="og:url" content="https://amper-foods.vercel.app/orders"/>
                 <title>Pedidos - Amper Foods</title>
             </Helmet>
             <Header />
-            {getOrders.length > 0 && 
+            {getOrders.length > 0 && !loadingPage &&
                 <OrderOpen data={getOrders[orderOpenIndex]}/>
             }
             <C.HeaderList>
-                {getOrders.length > 0 && 
+                {getOrders.length > 0 && !loadingPage &&
                     <>
                         <h3>Histórico de pedidos</h3>
                         <C.Button onClick={handleClearOrders}>
@@ -69,7 +80,7 @@ export const OrdersScreen = () => {
                     </>
                 }
             </C.HeaderList>
-            {getOrders.length == 0 && 
+            {getOrders.length == 0 && !loadingPage &&
                 <C.NoProductsArea>
                     <p>Você ainda não tem pedidos registrados.</p>
                     <C.Button>
@@ -82,7 +93,11 @@ export const OrdersScreen = () => {
                     <OrderItem key={index} data={order} onClick={handleIndexOrderOpen} index={index} componenteBRef={componenteBRef}/>
                 ))}
             </C.OrdersArea>
-            <p>item ativo {orderOpenIndex}</p>
+            {loadingPage &&
+                <C.ContainerLoaderPage>
+                    <Loader status={true} loadingFinish={false} isError={false} message='' dark={false}/>
+                </C.ContainerLoaderPage>
+            }
         </C.Container>
     );
 }
