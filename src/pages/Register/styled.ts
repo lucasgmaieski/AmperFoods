@@ -9,6 +9,9 @@ export const Titulo = styled.h2`
     color: #FA8229;
     margin-bottom: 15px;
 `;
+export const ContainerForm = styled.div`
+    padding-bottom: 40px;
+`;
 export const FormArea = styled.form`
     background-color: #fff;
     padding: 20px;

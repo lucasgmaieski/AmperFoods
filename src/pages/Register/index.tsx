@@ -95,58 +95,60 @@ export const Register = () => {
                 <title>Cadastre-se - Amper Foods</title>
             </Helmet>
             <Header />
-            <C.FormArea onSubmit={handleSubmit(handleForm)}>
-                <C.Titulo>Por favor digite suas informações de Cadastro</C.Titulo>
-                <C.Label>
-                    Nome:
-                    <C.Input type="text" id="name"  {...register('name')} onChange={handleInputChange}/>
-                    {errors.name && (
-                        <ErrorInput message={errors.name?.message} />
-                    )}
-                </C.Label>
-                <C.Label>
-                    Email:
-                    <C.Input type="text" id="email"  {...register('email')} onChange={handleInputChange}/>
-                    {errors.email && (
-                        <ErrorInput message={errors.email?.message} />
-                    )}
-                </C.Label>
-                <C.Label>
-                    Telefone:
-                    <C.Input type="text" id="phone"  {...register('phone')} onChange={handleInputChange}/>
-                    {errors.phone && (
-                        <ErrorInput message={errors.phone?.message} />
-                    )}
-                </C.Label>
-                <C.Label>
-                    Endereço:
-                    <C.Input type="text" id="address"  {...register('address')} onChange={handleInputChange}/>
-                    {errors.address && (
-                        <ErrorInput message={errors.address?.message} />
-                    )}
-                </C.Label>
-                <C.Label>
-                    Senha:
-                    <C.Input type="password" id="password"  {...register('password')} onChange={handleInputChange}/>
-                    {errors.password && (
-                        <ErrorInput message={errors.password?.message} />
-                    )}
-                </C.Label>
-                <C.Label>
-                    Confirmar senha:
-                    <C.Input type="password" id="confirmPassword"  {...register('confirmPassword')} onChange={handleInputChange}/>
-                    {errors.confirmPassword && (
-                        <ErrorInput message={errors.confirmPassword?.message} />
-                    )}
-                </C.Label>
-                    
-                <C.Submit>Cadastrar</C.Submit>
-                {loading && 
-                    <Loader status={loading} loadingFinish={loadingFinish} isError={error} message={message} dark={true}/>
-                }
-                <p>Você já tem uma conta?</p>
-                <Link to={'/login'} >Acesse sua conta aqui</Link>
-            </C.FormArea>
+            <C.ContainerForm>
+                <C.FormArea onSubmit={handleSubmit(handleForm)}>
+                    <C.Titulo>Por favor digite suas informações de Cadastro</C.Titulo>
+                    <C.Label>
+                        Nome:
+                        <C.Input type="text" id="name"  {...register('name')} onChange={handleInputChange}/>
+                        {errors.name && (
+                            <ErrorInput message={errors.name?.message} />
+                        )}
+                    </C.Label>
+                    <C.Label>
+                        Email:
+                        <C.Input type="text" id="email"  {...register('email')} onChange={handleInputChange}/>
+                        {errors.email && (
+                            <ErrorInput message={errors.email?.message} />
+                        )}
+                    </C.Label>
+                    <C.Label>
+                        Telefone:
+                        <C.Input type="text" id="phone"  {...register('phone')} onChange={handleInputChange}/>
+                        {errors.phone && (
+                            <ErrorInput message={errors.phone?.message} />
+                        )}
+                    </C.Label>
+                    <C.Label>
+                        Endereço:
+                        <C.Input type="text" id="address"  {...register('address')} onChange={handleInputChange}/>
+                        {errors.address && (
+                            <ErrorInput message={errors.address?.message} />
+                        )}
+                    </C.Label>
+                    <C.Label>
+                        Senha:
+                        <C.Input type="password" id="password"  {...register('password')} onChange={handleInputChange}/>
+                        {errors.password && (
+                            <ErrorInput message={errors.password?.message} />
+                        )}
+                    </C.Label>
+                    <C.Label>
+                        Confirmar senha:
+                        <C.Input type="password" id="confirmPassword"  {...register('confirmPassword')} onChange={handleInputChange}/>
+                        {errors.confirmPassword && (
+                            <ErrorInput message={errors.confirmPassword?.message} />
+                        )}
+                    </C.Label>
+                
+                    <C.Submit>Cadastrar</C.Submit>
+                    {loading &&
+                        <Loader status={loading} loadingFinish={loadingFinish} isError={error} message={message} dark={true}/>
+                    }
+                    <p>Você já tem uma conta?</p>
+                    <Link to={'/login'} >Acesse sua conta aqui</Link>
+                </C.FormArea>
+            </C.ContainerForm>
         </C.Container>
     );
 }

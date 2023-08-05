@@ -9,12 +9,18 @@ export const Titulo = styled.h2`
     color: #FA8229;
     margin-bottom: 15px;
 `;
+export const ContainerForm = styled.div`
+    padding-bottom: 40px;
+`;
 export const FormArea = styled.form`
     background-color: #fff;
     padding: 20px;
     border-radius: 20px;
     max-width: 400px;
     margin: 10vh auto;
+    @media(max-width: 768px) {
+        margin: 20px auto;
+    }
 `;
 export const Label = styled.div`
     display: flex;

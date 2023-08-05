@@ -134,32 +134,34 @@ export const Login = () => {
             </Helmet>
             <Header />
             {!loadingPage &&
-                <C.FormArea onSubmit={handleSubmit(handleForm)}>
-                    <C.Titulo>Faça Login para comprar</C.Titulo>
-                    <C.Label>
-                        Email:
-                        <C.Input type="text" id="email"  {...register('email')} onChange={handleInputChange}/>
-                        {errors.email && (
-                            <ErrorInput message={errors.email?.message} />
-                        )}
-                    </C.Label>
-                    <C.Label>
-                        Senha:
-                        <C.Input type="password" id="password"  {...register('password')} onChange={handleInputChange}/>
-                        {errors.password && (
-                            <ErrorInput message={errors.password?.message} />
-                        )}
-                    </C.Label>
-                        
-                    <Link to={'/#'} >Esqueceu sua senha?</Link>
-                        
-                    <C.Submit>Entrar</C.Submit>
-                    {loading && 
-                        <Loader status={loading} loadingFinish={loadingFinish} isError={error} dark={true} message={message}/>
-                    }
-                    <p>Você não tem uma conta?</p>
-                    <Link to={'/register'} >Crie a sua conta aqui</Link>
-                </C.FormArea>
+                <C.ContainerForm>
+                    <C.FormArea onSubmit={handleSubmit(handleForm)}>
+                        <C.Titulo>Faça Login para comprar</C.Titulo>
+                        <C.Label>
+                            Email:
+                            <C.Input type="text" id="email"  {...register('email')} onChange={handleInputChange}/>
+                            {errors.email && (
+                                <ErrorInput message={errors.email?.message} />
+                            )}
+                        </C.Label>
+                        <C.Label>
+                            Senha:
+                            <C.Input type="password" id="password"  {...register('password')} onChange={handleInputChange}/>
+                            {errors.password && (
+                                <ErrorInput message={errors.password?.message} />
+                            )}
+                        </C.Label>
+                    
+                        <Link to={'/#'} >Esqueceu sua senha?</Link>
+                    
+                        <C.Submit>Entrar</C.Submit>
+                        {loading &&
+                            <Loader status={loading} loadingFinish={loadingFinish} isError={error} dark={true} message={message}/>
+                        }
+                        <p>Você não tem uma conta?</p>
+                        <Link to={'/register'} >Crie a sua conta aqui</Link>
+                    </C.FormArea>
+                </C.ContainerForm>
             }
             
             {loadingPage &&

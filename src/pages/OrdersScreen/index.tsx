@@ -89,11 +89,13 @@ export const OrdersScreen = () => {
                 </C.NoProductsArea>
             }
             {!loadingPage &&
-                <C.OrdersArea orderopenindex={getOrders.length - orderOpenIndex -1}>
-                    {getOrders.slice().reverse().map((order, index)=>(
-                        <OrderItem key={index} data={order} onClick={handleIndexOrderOpen} index={index} componenteBRef={componenteBRef}/>
-                    ))}
-                </C.OrdersArea>
+                <C.ContainerOrders>
+                    <C.OrdersArea orderopenindex={getOrders.length - orderOpenIndex -1}>
+                        {getOrders.slice().reverse().map((order, index)=>(
+                            <OrderItem key={index} data={order} onClick={handleIndexOrderOpen} index={index} componenteBRef={componenteBRef}/>
+                        ))}
+                    </C.OrdersArea>
+                </C.ContainerOrders>
             }
             {loadingPage &&
                 <C.ContainerLoaderPage>

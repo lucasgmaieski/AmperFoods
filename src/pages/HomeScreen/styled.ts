@@ -21,6 +21,9 @@ export const CategoryList = styled.div`
     display: flex;
     margin-top: 10px;
 `;
+export const ContainerProducts = styled.div`
+    padding-bottom: 50px;
+`;
 export const ProductArea = styled.div`
     margin-top: 25px;
     margin-bottom: 10px;
@@ -59,5 +62,5 @@ export const ProductPaginationItem = styled.div<{active: number, current: number
     }
 `;
 export const ContainerLoaderPage = styled.div`
-    margin-top: 16vh;
+    margin-top: 40px;
 `;

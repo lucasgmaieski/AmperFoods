@@ -3,11 +3,15 @@ import styled from 'styled-components';
 export const Container = styled.div`
     width: 100%;
     margin: 15px;
+    padding-bottom: 40px;
 `;
 export const Titulo = styled.div`
     font-size: 20px;
     color: #000;
     margin: 20px 0;
+`;
+export const ContainerForm = styled.div`
+    padding-bottom: 40px;
 `;
 export const FormArea = styled.div`
     position: relative;

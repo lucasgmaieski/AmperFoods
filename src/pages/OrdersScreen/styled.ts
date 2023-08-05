@@ -33,6 +33,9 @@ export const Button = styled.button`
         color: #E3531a;
     }
 `;
+export const ContainerOrders = styled.div`
+    padding-bottom: 65px;
+`;
 export const OrdersArea = styled.div<{orderopenindex:number}>`
     display: grid;
     grid-template-columns: repeat(3, 1fr);

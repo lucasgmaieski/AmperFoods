@@ -103,47 +103,52 @@ export default () => {
                     </C.CategoryList>
                 </C.CategoryArea>
             }
+            <C.ContainerProducts>
+                {products.length > 0 && !loadingPage && 
+                    <C.ProductArea>
+                        <C.ProductList>
+                            {products.map((item, index)=>(
+                                <ProductItem 
+                                    key={index}
+                                    data={item}
+                                    onClick={handleProductClick}
+                                />
+                            ))}
+                        </C.ProductList>
+                    </C.ProductArea>
+                }
 
-            {products.length > 0 && !loadingPage && 
-                <C.ProductArea>
-                    <C.ProductList>
-                        {products.map((item, index)=>(
-                            <ProductItem 
-                                key={index}
-                                data={item}
-                                onClick={handleProductClick}
-                            />
-                        ))}
-                    </C.ProductList>
-                </C.ProductArea>
-            }
-            {products.length === 0 && !loading && !loadingPage && 
-                <C.NoProducts>Nenhum produto encontrado!</C.NoProducts>
-            }
-            {loading && !loadingPage &&
-                <C.ContainerLoaderPage>
-                    <Loader status={true} loadingFinish={false} isError={false} message='' dark={false}/>
-                </C.ContainerLoaderPage>            }
-
-            {totalPages > 1 && !loading && !loadingPage &&
-                <C.ProductPaginationArea>
-                    {Array(totalPages).fill(0).map((item, index)=>(
-                        <C.ProductPaginationItem 
+                {totalPages > 1 && !loading && !loadingPage &&
+                    <C.ProductPaginationArea>
+                        {Array(totalPages).fill(0).map((item, index)=>(
+                            <C.ProductPaginationItem 
                             key={index} 
                             active={activePage}
                             current={index + 1}
                             onClick={()=>setActivePage(index + 1)}
-                        >
-                            {index + 1 + item}
-                        </C.ProductPaginationItem>
-                    ))}
-                </C.ProductPaginationArea>
-            }
-            {loadingPage &&
-                <C.ContainerLoaderPage>
-                    <Loader status={true} loadingFinish={false} isError={false} message='' dark={false}/>
-                </C.ContainerLoaderPage>
-            }
+                            >
+                                {index + 1 + item}
+                            </C.ProductPaginationItem>
+                        ))}
+                    </C.ProductPaginationArea>
+                }
+                {products.length === 0 && !loading && !loadingPage && 
+                    <C.NoProducts>Nenhum produto encontrado!</C.NoProducts>
+                }
+                {loading && !loadingPage &&
+                    <C.ContainerLoaderPage>
+                        <Loader status={true} loadingFinish={false} isError={false} message='' dark={false}/>
+                    </C.ContainerLoaderPage>            
+                }
+                {loadingPage &&
+                    <C.ContainerLoaderPage>
+                        <Loader status={true} loadingFinish={false} isError={false} message='' dark={false}/>
+                    </C.ContainerLoaderPage>
+                }
+            </C.ContainerProducts>
+            
+
+            
             <Modal status={modalStatus} setStatus={setModalStatus}>
                 <ModalProduct data={modalData} setStatus={setModalStatus}/>
             </Modal>

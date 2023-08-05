@@ -170,49 +170,52 @@ export const ProfileScreen = () => {
                 <title>Perfil - Amper Foods</title>
             </Helmet>
             <Header />
-            <C.FormArea >
-                <form onSubmit={handleSubmit(handleForm)}>
-                    <C.Titulo>Olá, <strong>{userInfos.name.trim().split(" ")[0]}</strong> </C.Titulo>
-                    <p>Aqui você pode alterar suas informações pessoais.</p>
-                    <C.Label>
-                        Nome:
-                        <C.Input type="text" id="name"  {...register('name')} />
-                        {errors.name && (
-                            <ErrorInput message={errors.name?.message} />
-                        )}
-                    </C.Label>
-                    <C.Label>
-                        Email:
-                        <C.Input type="email" id="email" readOnly title="O email não pode ser alterado." {...register('email')}/>
-                        {errors.email && (
-                            <ErrorInput message={errors.email?.message} />
-                        )}
-                    </C.Label>
-                    <C.Label>
-                        Telefone:
-                        <C.Input type="tel" id="phone"  {...register('phone')} />
-                        {errors.phone && (
-                            <ErrorInput message={errors.phone?.message} />
-                        )}
-                    </C.Label>
-                    
-                    <C.Label>
-                        Endereço:
-                        <C.Input type="text" id="address"  {...register('address')} />
-                        {errors.address && (
-                            <ErrorInput message={errors.address?.message} />
-                        )}
-                    </C.Label>
-                    <C.ButtonSave type="submit" value="salvar"/>
-                    {loading &&
-                        <Loader status={loading} loadingFinish={loadingFinish} isError={error} dark={true} message={message}/>
-                    }
-                </form>
-                <C.ButtonsArea>
-                    <C.Button onClick={handleLogout}>Sair</C.Button>
-                    <C.Button onClick={handleDeleteAccountClick}>Excluir Conta</C.Button>
-                </C.ButtonsArea>
-            </C.FormArea>
+            <C.ContainerForm>
+                <C.FormArea >
+                    <form onSubmit={handleSubmit(handleForm)}>
+                        <C.Titulo>Olá, <strong>{userInfos.name.trim().split(" ")[0]}</strong> </C.Titulo>
+                        <p>Aqui você pode alterar suas informações pessoais.</p>
+                        <C.Label>
+                            Nome:
+                            <C.Input type="text" id="name"  {...register('name')} />
+                            {errors.name && (
+                                <ErrorInput message={errors.name?.message} />
+                            )}
+                        </C.Label>
+                        <C.Label>
+                            Email:
+                            <C.Input type="email" id="email" readOnly title="O email não pode ser alterado." {...register('email')}/>
+                            {errors.email && (
+                                <ErrorInput message={errors.email?.message} />
+                            )}
+                        </C.Label>
+                        <C.Label>
+                            Telefone:
+                            <C.Input type="tel" id="phone"  {...register('phone')} />
+                            {errors.phone && (
+                                <ErrorInput message={errors.phone?.message} />
+                            )}
+                        </C.Label>
+                        
+                        <C.Label>
+                            Endereço:
+                            <C.Input type="text" id="address"  {...register('address')} />
+                            {errors.address && (
+                                <ErrorInput message={errors.address?.message} />
+                            )}
+                        </C.Label>
+                        <C.ButtonSave type="submit" value="salvar"/>
+                        {loading &&
+                            <Loader status={loading} loadingFinish={loadingFinish} isError={error} dark={true} message={message}/>
+                        }
+                    </form>
+                    <C.ButtonsArea>
+                        <C.Button onClick={handleLogout}>Sair</C.Button>
+                        <C.Button onClick={handleDeleteAccountClick}>Excluir Conta</C.Button>
+                    </C.ButtonsArea>
+                </C.FormArea>
+            </C.ContainerForm>
+            
             <Modal status={modalStatus} setStatus={setModalStatus}>
                 <ModalDeleteAccount setModalStatus={setModalStatus} setConfirmDeleteAccount={setConfirmDeleteAccount}/>
             </Modal>
